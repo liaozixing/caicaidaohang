@@ -56,13 +56,21 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 24px; /* 顶部区域元素间距 */
+}
+
+.theme-controls {
+    display: flex;
+    align-items: center;
+    gap: 24px; /* 组件水平间距 24px */
 }
 
 .theme-toggle {
     position: relative;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 120px; /* 统一按钮宽度 */
+    height: 40px; /* 统一按钮高度 */
+    padding: 8px; /* 内边距 8px */
+    border-radius: 8px; /* 圆角统一 */
     background: var(--bg-secondary);
     display: flex;
     align-items: center;
@@ -83,9 +91,10 @@ body {
 }
 
 .theme-toggle i {
-    font-size: 1.8rem;
+    font-size: 16px; /* 字号 16px */
     color: var(--text-primary);
     transition: all var(--transition-speed) ease;
+    line-height: 1.5; /* 行高 1.5 */
 }
 
 .theme-toggle .fa-sun {
@@ -103,6 +112,197 @@ body {
 
 [data-theme="dark"] .theme-toggle:hover {
     background: rgba(60, 60, 80, 0.9);
+}
+
+/* 跟随系统开关样式 */
+.system-follow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px; /* 与按钮统一圆角 */
+    padding: 8px; /* 内边距 8px */
+    min-width: 120px; /* 统一按钮尺寸 */
+    min-height: 40px;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed) ease;
+}
+
+.system-follow:hover {
+    box-shadow: var(--card-shadow-hover);
+}
+
+.switch {
+    position: relative;
+    width: 42px;
+    height: 24px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    transition: all var(--transition-speed) ease;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 2px;
+    left: 3px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform var(--transition-speed) ease, background var(--transition-speed) ease;
+}
+
+.switch input:checked + .slider {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #2980b9 100%);
+    border-color: transparent;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(18px);
+    background: #fff;
+}
+
+.switch-text {
+    font-size: 16px; /* 字号 16px */
+    line-height: 1.5; /* 行高 1.5 */
+    color: var(--text-primary);
+    user-select: none;
+}
+
+/* Logo 火箭图标容器与尺寸 */
+.logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px; /* 48x48 尺寸 */
+    height: 48px;
+    margin-right: 16px; /* 与周边元素 16px 间距 */
+}
+.logo i {
+    font-size: 24px; /* 图标字号适配容器 */
+    background: linear-gradient(135deg, var(--accent-color) 0%, #2ecc71 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Rocket Stage Layout */
+.rocket-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 16px 0;
+    margin: 8px 0 16px;
+    z-index: 1; /* 避免与其他元素重叠 */
+}
+.rocket-wrap {
+    position: relative;
+    width: clamp(72px, 10vw, 180px); /* 原始 48px 的 150% 起始尺寸，随屏幕自适应 */
+    height: clamp(72px, 10vw, 180px);
+}
+.rocket-svg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.25));
+}
+.rocket-particles {
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 70%;
+    pointer-events: none;
+}
+.rocket-controls {
+    display: flex;
+    gap: 24px;
+    margin-top: 12px;
+}
+.rocket-btn {
+    min-width: 120px;
+    height: 40px;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+}
+.rocket-btn:hover { background: var(--bg-hover); }
+
+/* Rocket Parts Animations and States */
+.rocket-flame { filter: blur(1.2px) brightness(1.15); }
+.flame-glow { animation: idleGlow 2s ease-in-out infinite; }
+
+/* 尾翼展开（15度） */
+.fins-open .fin-left { transform-origin: -18px 0; transform: rotate(-15deg); }
+.fins-open .fin-right { transform-origin: 18px 0; transform: rotate(15deg); }
+
+/* 状态：静止（默认蓝色光晕） */
+.state-idle .flame-layer { opacity: 0; }
+.state-idle .flame-glow { opacity: 0.7; }
+
+/* 状态：启动（0.5s 短促黄色火焰） */
+.state-startup .flame-layer {
+    opacity: 0.95;
+    animation: startupFlame 0.5s ease-out forwards;
+}
+.state-startup .flame-glow { opacity: 0.2; }
+.state-startup .rocket-fins { animation: finsOpen 0.4s ease-out forwards; }
+
+/* 状态：全速（1s 多层渐变） */
+.state-thrust .flame-layer {
+    opacity: 1;
+    animation: thrustFlame 1s ease-in-out infinite;
+}
+.state-thrust .flame-glow { opacity: 0; }
+.state-thrust .rocket-fins { animation: finsOpen 0.3s ease-out forwards; }
+
+/* Keyframes */
+@keyframes idleGlow {
+    0%, 100% { transform: scale(0.95); filter: blur(1.5px) brightness(1.1); }
+    50% { transform: scale(1.05); filter: blur(2px) brightness(1.25); }
+}
+@keyframes startupFlame {
+    0% { transform: translateY(2px) scale(0.8); filter: brightness(1); }
+    100% { transform: translateY(0) scale(1.1); filter: brightness(1.25); }
+}
+@keyframes thrustFlame {
+    0% { transform: scale(1) translateY(0); filter: brightness(1.2); }
+    50% { transform: scale(1.15) translateY(1px); filter: brightness(1.35) saturate(1.1); }
+    100% { transform: scale(1) translateY(0); filter: brightness(1.2); }
+}
+@keyframes finsOpen {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* 响应式：移动端保持比例并垂直布局 */
+@media (max-width: 768px) {
+    .rocket-stage { padding: 8px 0; }
+    .rocket-controls { gap: 16px; }
+}
+
+[data-theme="dark"] .system-follow {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
 }
 
 header {
@@ -659,9 +859,13 @@ footer {
 }
 
 .popup-content {
-    background: white;
+    /* 毛玻璃（明亮模式） */
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
     padding: 30px;
     border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
     max-width: 600px;
     width: 90%;
     max-height: 80vh;
@@ -675,27 +879,42 @@ footer {
     top: 15px;
     right: 15px;
     font-size: 1.5rem;
-    color: #666;
+    color: #333333;
     cursor: pointer;
     transition: all 0.3s ease;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50%;
+    padding: 4px 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .popup-close:hover {
-    color: #333;
+    color: #111111;
+    background: rgba(255,255,255,0.95);
     transform: rotate(90deg);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+ 
+.popup-close:active {
+    color: #000000;
+    transform: scale(0.97) rotate(90deg);
+    background: rgba(255,255,255,1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
 }
 
 .popup h3 {
-    color: #2c3e50;
+    color: #ffffff;
     margin-bottom: 20px;
     font-size: 1.5rem;
     padding-right: 30px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 
 .popup p {
     margin-bottom: 15px;
     line-height: 1.6;
-    color: #2c3e50;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 
 /* 弹窗中的移动端查看与二维码样式 */
@@ -705,7 +924,13 @@ footer {
     border-top: 1px solid var(--border-color);
 }
 
-.mobile-view-btn {
+.mobile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 移动端按钮间距在8-12px范围内 */
+}
+
+.mobile-view-btn, .official-website-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -719,9 +944,10 @@ footer {
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 3px 8px rgba(52, 152, 219, 0.35);
+    text-decoration: none;
 }
 
-.mobile-view-btn:hover {
+.mobile-view-btn:hover, .official-website-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(52, 152, 219, 0.45);
 }
@@ -754,7 +980,7 @@ footer {
     color: var(--text-secondary);
 }
 
-[data-theme="dark"] .mobile-view-btn {
+[data-theme="dark"] .mobile-view-btn, [data-theme="dark"] .official-website-btn {
     box-shadow: 0 3px 8px rgba(52, 152, 219, 0.25);
 }
 
@@ -807,20 +1033,39 @@ footer {
 
 /* 暗色主题下的弹窗样式 */
 [data-theme="dark"] .popup-content {
-    background: var(--card-bg);
+    /* 毛玻璃（暗色模式） */
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     color: var(--text-primary);
 }
 
 [data-theme="dark"] .popup h3 {
-    color: var(--text-primary);
+    color: #ffffff;
 }
 
 [data-theme="dark"] .popup p {
-    color: var(--text-primary);
+    color: #ffffff;
 }
 
 [data-theme="dark"] .popup a {
+    /* 保持常规链接颜色，但不影响按钮类 */
     color: var(--accent-color);
+}
+
+/* 修复官方按钮字体颜色在深色模式下变淡：提高优先级覆盖 */
+.popup .official-website-btn,
+.popup .mobile-view-btn {
+    color: #fff; /* 在两种模式下保持白色，保证对比度 */
+}
+[data-theme="dark"] .popup .official-website-btn,
+[data-theme="dark"] .popup .mobile-view-btn {
+    color: #fff; /* 覆盖暗色模式的通用链接颜色规则 */
+}
+.popup .official-website-btn:hover,
+.popup .mobile-view-btn:hover {
+    color: #fff;
 }
 
 .popup ul {
@@ -964,9 +1209,24 @@ footer {
         font-size: 2.1rem;
     }
     
-    .logo {
-        font-size: 2.8rem;
+    .header-top {
+        flex-direction: column; /* 移动端垂直排列 */
+        align-items: flex-start;
+        gap: 16px;
     }
+    .theme-controls {
+        flex-direction: column; /* 控件垂直排列 */
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
+/* 无障碍：焦点可见性增强，满足 WCAG 2.1 AA */
+.theme-toggle:focus-visible,
+.system-follow:focus-visible,
+.switch .slider:focus-visible {
+    outline: 3px solid #2980b9;
+    outline-offset: 2px;
 }
 
 @media (max-width: 480px) {

@@ -29,7 +29,7 @@ document.addEventListener('keydown', function(e) {
     }
 }); 
 
-// 详情弹窗：注入“在移动端查看”按钮与二维码
+// 详情弹窗：注入“在移动端查看”和“访问官网”按钮，以及二维码
 function initDetailMobileView() {
   const detailMap = {};
   // 构建详情弹窗ID与官网链接的映射
@@ -38,7 +38,14 @@ function initDetailMobileView() {
     if (m) {
       const id = m[1];
       const card = btn.closest('.software-card');
-      const link = card && card.querySelector('.visit-btn') ? card.querySelector('.visit-btn').href : '';
+      let link = '';
+      if (card) {
+        link = card.dataset.website || '';
+        if (!link) {
+          const a = card.querySelector('.visit-btn');
+          link = a ? a.href : '';
+        }
+      }
       detailMap[id] = link;
     }
   });
@@ -55,7 +62,10 @@ function initDetailMobileView() {
     const wrapper = document.createElement('div');
     wrapper.className = 'mobile-view';
     wrapper.innerHTML = `
-      <button class="mobile-view-btn" type="button"><i class="fas fa-qrcode"></i> 在移动端查看</button>
+      <div class="mobile-actions">
+        <button class="mobile-view-btn" type="button"><i class="fas fa-qrcode"></i> 在移动端查看</button>
+        <a class="official-website-btn" href="#" target="_blank" rel="noopener">访问官网</a>
+      </div>
       <div class="qr-container"><img alt="二维码" /><p class="qr-hint">扫描二维码在手机打开官网</p></div>
     `;
     content.appendChild(wrapper);
@@ -63,6 +73,17 @@ function initDetailMobileView() {
     const btn = wrapper.querySelector('.mobile-view-btn');
     const qr = wrapper.querySelector('.qr-container');
     const img = qr.querySelector('img');
+    const siteBtn = wrapper.querySelector('.official-website-btn');
+
+    // 设置官网链接
+    const siteLink = detailMap[popup.id] || '';
+    if (siteLink) {
+      siteBtn.href = siteLink;
+    } else {
+      siteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+      });
+    }
 
     btn.addEventListener('click', () => {
       const url = detailMap[popup.id] || '';

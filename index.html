@@ -7,18 +7,85 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+    <script>
+        // 预设主题，避免首次渲染闪烁
+        (function() {
+            try {
+                var followSystem = JSON.parse(localStorage.getItem('followSystem') || 'true');
+                var manualTheme = localStorage.getItem('theme') || 'dark';
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var theme = followSystem ? (prefersDark ? 'dark' : 'light') : manualTheme;
+                // 设置到 html 元素，确保 CSS 变量立即生效
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
             <div class="header-top">
-                <div class="logo">
-                    <i class="fas fa-rocket"></i>
+                <div class="logo"></div>
+                <div class="theme-controls">
+                    <div class="theme-toggle" id="theme-toggle" title="手动切换暗/亮主题（点击将关闭系统跟随）">
+                        <i class="fas fa-sun" id="theme-icon"></i>
+                    </div>
+                    <div class="system-follow" title="跟随系统主题（开启后自动随系统变化）">
+                        <label class="switch" aria-label="跟随系统">
+                            <input type="checkbox" id="follow-system-checkbox" checked>
+                            <span class="slider" aria-hidden="true"></span>
+                        </label>
+                        <span class="switch-text" id="follow-system-text">跟随系统</span>
+                    </div>
                 </div>
-                <div class="theme-toggle" id="theme-toggle">
-                    <i class="fas fa-sun" id="theme-icon"></i>
+            </div>
+            <!-- Rocket Stage: 位于顶部导航与主内容之间的白色空白区域中央 -->
+            <div class="rocket-stage" aria-label="火箭动画舞台">
+                <div class="rocket-wrap" id="rocket-wrap" tabindex="0" role="button" aria-pressed="false" aria-description="点击触发启动动画，按钮可切换循环喷射">
+                    <!-- 粒子画布（在火焰下方） -->
+                    <canvas id="rocket-particles" class="rocket-particles" width="320" height="180" aria-hidden="true"></canvas>
+                    <!-- 火箭 SVG：SVG+CSS 动画实现主体视觉 -->
+                    <svg id="rocket-svg" class="rocket-svg state-idle" width="160" height="160" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="火箭">
+                        <!-- 火箭主体 -->
+                        <defs>
+                            <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#dfe6e9"/>
+                            </linearGradient>
+                            <radialGradient id="windowGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#74b9ff"/>
+                                <stop offset="100%" stop-color="#0984e3"/>
+                            </radialGradient>
+                            <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#fff200"/>
+                                <stop offset="50%" stop-color="#ff7f11"/>
+                                <stop offset="100%" stop-color="#c0392b"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- 机身 -->
+                        <g class="rocket-body" transform="translate(50,45)">
+                            <path d="M0,-40 C15,-25 18,-5 18,10 C18,20 10,30 0,35 C-10,30 -18,20 -18,10 C-18,-5 -15,-25 0,-40 Z" fill="url(#bodyGrad)" stroke="#b2bec3" stroke-width="1.5"/>
+                            <circle cx="0" cy="-15" r="7" fill="url(#windowGrad)" stroke="#2d3436" stroke-width="1"/>
+                        </g>
+                        <!-- 尾翼（可动式，喷射时展开） -->
+                        <g class="rocket-fins" transform="translate(50,60)">
+                            <path class="fin fin-left" d="M-18,0 L-32,10 L-18,8 Z" fill="#b2bec3"/>
+                            <path class="fin fin-right" d="M18,0 L32,10 L18,8 Z" fill="#b2bec3"/>
+                        </g>
+                        <!-- 火焰（多层渐变） -->
+                        <g class="rocket-flame" transform="translate(50,68)">
+                            <path class="flame-layer layer-1" d="M0,0 C8,10 6,22 0,30 C-6,22 -8,10 0,0 Z" fill="url(#flameGrad)"/>
+                            <path class="flame-layer layer-2" d="M0,2 C6,12 5,22 0,28 C-5,22 -6,12 0,2 Z" fill="url(#flameGrad)" opacity="0.85"/>
+                            <path class="flame-layer layer-3" d="M0,4 C5,12 4,20 0,24 C-4,20 -5,12 0,4 Z" fill="url(#flameGrad)" opacity="0.7"/>
+                            <!-- 静止状态蓝色光晕 -->
+                            <ellipse class="flame-glow" cx="0" cy="10" rx="9" ry="6" fill="#74b9ff" opacity="0.6"/>
+                        </g>
+                    </svg>
                 </div>
+                <div class="rocket-controls" role="group" aria-label="火箭动画控制"></div>
             </div>
             <h1>软件与网站导航</h1>
             <p class="subtitle">精选高效实用工具与优质网站，一站式访问官方网站与资源</p>
@@ -58,7 +125,7 @@
         
         <div class="software-grid">
             <!-- VS Code -->
-            <div class="software-card" data-category="editor">
+            <div class="software-card" data-category="editor" data-website="https://code.visualstudio.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('vscode-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #007ACC 0%, #005999 100%);">
                     <i class="fas fa-code"></i>
@@ -66,14 +133,13 @@
                 <h3 class="software-name">Visual Studio Code</h3>
                 <p class="software-desc">轻量级强大的代码编辑器</p>
                 <div class="button-group">
-                    <a href="https://code.visualstudio.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('vscode-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- PyCharm -->
-            <div class="software-card" data-category="editor">
+            <div class="software-card" data-category="editor" data-website="https://www.jetbrains.com/pycharm/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('pycharm-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #21D789 0%, #1A9F6B 100%);">
                     <i class="fab fa-python"></i>
@@ -81,14 +147,13 @@
                 <h3 class="software-name">PyCharm</h3>
                 <p class="software-desc">专业的Python IDE</p>
                 <div class="button-group">
-                    <a href="https://www.jetbrains.com/pycharm/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('pycharm-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- WebStorm -->
-            <div class="software-card" data-category="editor">
+            <div class="software-card" data-category="editor" data-website="https://www.jetbrains.com/webstorm/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('webstorm-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);">
                     <i class="fab fa-js"></i>
@@ -96,14 +161,13 @@
                 <h3 class="software-name">WebStorm</h3>
                 <p class="software-desc">智能的JavaScript IDE</p>
                 <div class="button-group">
-                    <a href="https://www.jetbrains.com/webstorm/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('webstorm-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- IntelliJ IDEA -->
-            <div class="software-card" data-category="editor">
+            <div class="software-card" data-category="editor" data-website="https://www.jetbrains.com/idea/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('intellij-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #000000 0%, #333333 100%);">
                     <i class="fas fa-coffee"></i>
@@ -111,14 +175,13 @@
                 <h3 class="software-name">IntelliJ IDEA</h3>
                 <p class="software-desc">强大的Java IDE</p>
                 <div class="button-group">
-                    <a href="https://www.jetbrains.com/idea/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('intellij-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- Sublime Text -->
-            <div class="software-card" data-category="editor">
+            <div class="software-card" data-category="editor" data-website="https://www.sublimetext.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('sublime-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);">
                     <i class="fas fa-file-code"></i>
@@ -126,14 +189,13 @@
                 <h3 class="software-name">Sublime Text</h3>
                 <p class="software-desc">轻量级文本编辑器</p>
                 <div class="button-group">
-                    <a href="https://www.sublimetext.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('sublime-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- 火绒安全 -->
-            <div class="software-card" data-category="security">
+            <div class="software-card" data-category="security" data-website="https://www.huorong.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('huorong-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">
                     <i class="fas fa-shield-alt"></i>
@@ -141,14 +203,13 @@
                 <h3 class="software-name">火绒安全</h3>
                 <p class="software-desc">轻量级安全防护软件，专注终端安全</p>
                 <div class="button-group">
-                    <a href="https://www.huorong.cn/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('huorong-detail')">详情</button>
                 </div>
                 <div class="category-tag">安全</div>
             </div>
             
             <!-- WeGame -->
-            <div class="software-card" data-category="gaming">
+            <div class="software-card" data-category="gaming" data-website="https://www.wegame.com.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('wegame-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #fbc531 0%, #e1b12c 100%);">
                     <i class="fas fa-gamepad"></i>
@@ -156,14 +217,13 @@
                 <h3 class="software-name">WeGame</h3>
                 <p class="software-desc">腾讯官方游戏平台，提供游戏下载与管理</p>
                 <div class="button-group">
-                    <a href="https://www.wegame.com.cn/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('wegame-detail')">详情</button>
                 </div>
                 <div class="category-tag">游戏</div>
             </div>
 
             <!-- Steam -->
-            <div class="software-card" data-category="gaming" title="访问Steam需要加速器">
+            <div class="software-card" data-category="gaming" title="访问Steam需要加速器" data-website="https://store.steampowered.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('steam-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #171a21 0%, #2a475e 100%);">
                     <i class="fab fa-steam"></i>
@@ -171,14 +231,13 @@
                 <h3 class="software-name">Steam</h3>
                 <p class="software-desc">全球最大的数字游戏发行平台</p>
                 <div class="button-group">
-                    <a href="https://store.steampowered.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('steam-detail')">详情</button>
                 </div>
                 <div class="category-tag">游戏</div>
             </div>
             
             <!-- Office Tool -->
-            <div class="software-card" data-category="tools">
+            <div class="software-card" data-category="tools" data-website="https://otp.landian.vip/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('office-tool-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #1dd1a1 0%, #10ac84 100%);">
                     <i class="fas fa-wrench"></i>
@@ -186,14 +245,13 @@
                 <h3 class="software-name">Office Tool</h3>
                 <p class="software-desc">强大的Office部署管理工具</p>
                 <div class="button-group">
-                    <a href="https://otp.landian.vip/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('office-tool-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- 图吧工具箱 -->
-            <div class="software-card" data-category="tools">
+            <div class="software-card" data-category="tools" data-website="http://www.tbtool.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('tbtool-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #54a0ff 0%, #2e86de 100%);">
                     <i class="fas fa-toolbox"></i>
@@ -201,14 +259,13 @@
                 <h3 class="software-name">图吧工具箱</h3>
                 <p class="software-desc">硬件检测与系统维护工具集合</p>
                 <div class="button-group">
-                    <a href="http://www.tbtool.cn/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('tbtool-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- Bandizip -->
-            <div class="software-card" data-category="tools">
+            <div class="software-card" data-category="tools" data-website="https://www.bandisoft.com/bandizip/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('bandizip-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #feca57 0%, #ff9f43 100%);">
                     <i class="fas fa-file-archive"></i>
@@ -216,14 +273,13 @@
                 <h3 class="software-name">Bandizip</h3>
                 <p class="software-desc">高效轻量的压缩解压工具</p>
                 <div class="button-group">
-                    <a href="https://www.bandisoft.com/bandizip/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('bandizip-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- PotPlayer -->
-            <div class="software-card" data-category="multimedia">
+            <div class="software-card" data-category="multimedia" data-website="https://potplayer.daum.net/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('potplayer-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #5f27cd 0%, #341f97 100%);">
                     <i class="fas fa-play-circle"></i>
@@ -231,14 +287,13 @@
                 <h3 class="software-name">PotPlayer</h3>
                 <p class="software-desc">功能强大的多媒体播放器</p>
                 <div class="button-group">
-                    <a href="https://potplayer.daum.net/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('potplayer-detail')">详情</button>
                 </div>
                 <div class="category-tag">多媒体</div>
             </div>
             
             <!-- HiBitUninstaller -->
-            <div class="software-card" data-category="tools">
+            <div class="software-card" data-category="tools" data-website="https://hibitsoft.ir/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('hibit-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);">
                     <i class="fas fa-trash-alt"></i>
@@ -246,14 +301,73 @@
                 <h3 class="software-name">HiBitUninstaller</h3>
                 <p class="software-desc">强大的软件卸载清理工具</p>
                 <div class="button-group">
-                    <a href="https://hibitsoft.ir/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('hibit-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- 软仓 RuanCang -->
+            <!-- 官方链接占位符: ${__web_page_ruancang__} -->
+            <div class="software-card" data-category="tools" data-website="https://www.ruancang.net/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('ruancang-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3 class="software-name">软仓 (RuanCang)</h3>
+                <p class="software-desc">软件资源导航网站，提供设计/三维/后期/电子/办公等资源</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('ruancang-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- Convertio -->
+            <!-- 官方链接占位符: ${__web_page_convertio__} -->
+            <div class="software-card" data-category="tools" data-website="https://convertio.co/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('convertio-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3 class="software-name">Convertio</h3>
+                <p class="software-desc">在线格式转换平台，支持300+格式和多来源上传</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('convertio-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- Photopea -->
+            <!-- 官方链接占位符: ${__web_page_photopea__} -->
+            <div class="software-card" data-category="tools" data-website="https://www.photopea.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('photopea-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Photopea</h3>
+                <p class="software-desc">在线图像编辑器，支持PSD等专业格式与PS快捷键</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('photopea-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- Hotkey Cheatsheet -->
+            <!-- 官方链接占位符: ${__web_page_hotkey__} -->
+            <div class="software-card" data-category="tools" data-website="https://hotkeycheatsheet.com/zh">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('hotkey-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <h3 class="software-name">Hotkey Cheatsheet</h3>
+                <p class="software-desc">专业软件快捷键查询，虚拟键盘显示，Windows/Mac切换</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('hotkey-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- 微信 -->
-            <div class="software-card" data-category="social">
+            <div class="software-card" data-category="social" data-website="https://weixin.qq.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('wechat-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #0be881 0%, #05c46b 100%);">
                     <i class="fab fa-weixin"></i>
@@ -261,14 +375,13 @@
                 <h3 class="software-name">微信</h3>
                 <p class="software-desc">跨平台通讯社交应用</p>
                 <div class="button-group">
-                    <a href="https://weixin.qq.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('wechat-detail')">详情</button>
                 </div>
                 <div class="category-tag">社交</div>
             </div>
             
             <!-- QQ -->
-            <div class="software-card" data-category="social">
+            <div class="software-card" data-category="social" data-website="https://im.qq.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('qq-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #1a5276 100%);">
                     <i class="fab fa-qq"></i>
@@ -276,14 +389,13 @@
                 <h3 class="software-name">QQ</h3>
                 <p class="software-desc">腾讯即时通讯软件</p>
                 <div class="button-group">
-                    <a href="https://im.qq.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('qq-detail')">详情</button>
                 </div>
                 <div class="category-tag">社交</div>
             </div>
             
             <!-- Adobe Creative Cloud -->
-            <div class="software-card" data-category="design">
+            <div class="software-card" data-category="design" data-website="https://www.adobe.com/cn/creativecloud/roc/business.html">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('adobe-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #5dade2 0%, #2874a6 100%);">
                     <i class="fas fa-cloud"></i>
@@ -291,14 +403,13 @@
                 <h3 class="software-name">Adobe Creative Cloud</h3>
                 <p class="software-desc">创意设计软件套装</p>
                 <div class="button-group">
-                    <a href="https://www.adobe.com/cn/creativecloud/roc/business.html" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('adobe-detail')">详情</button>
                 </div>
                 <div class="category-tag">设计</div>
             </div>
             
             <!-- DeepSeek -->
-            <div class="software-card" data-category="ai">
+            <div class="software-card" data-category="ai" data-website="https://chat.deepseek.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('deepseek-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-brain"></i>
@@ -306,14 +417,13 @@
                 <h3 class="software-name">DeepSeek</h3>
                 <p class="software-desc">强大的AI对话与创作平台</p>
                 <div class="button-group">
-                    <a href="https://chat.deepseek.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('deepseek-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 豆包AI -->
-            <div class="software-card" data-category="ai">
+            <div class="software-card" data-category="ai" data-website="https://www.doubao.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('doubao-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
                     <i class="fas fa-robot"></i>
@@ -321,14 +431,13 @@
                 <h3 class="software-name">豆包AI</h3>
                 <p class="software-desc">字节跳动推出的AI助手平台</p>
                 <div class="button-group">
-                    <a href="https://www.doubao.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('doubao-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 腾讯元宝 -->
-            <div class="software-card" data-category="ai">
+            <div class="software-card" data-category="ai" data-website="https://yuanbao.tencent.com/app/list">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('yuanbao-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
                     <i class="fas fa-robot"></i>
@@ -336,14 +445,13 @@
                 <h3 class="software-name">腾讯元宝</h3>
                 <p class="software-desc">腾讯推出的AI创作与对话平台</p>
                 <div class="button-group">
-                    <a href="https://yuanbao.tencent.com/app/list" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('yuanbao-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- Cursor -->
-            <div class="software-card" data-category="editor">
+            <div class="software-card" data-category="editor" data-website="https://cursor.sh/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('cursor-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
                     <i class="fas fa-code"></i>
@@ -351,14 +459,13 @@
                 <h3 class="software-name">Cursor</h3>
                 <p class="software-desc">AI驱动的智能代码编辑器</p>
                 <div class="button-group">
-                    <a href="https://cursor.sh/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('cursor-detail')">详情</button>
                 </div>
                 <div class="category-tag">编程</div>
             </div>
 
             <!-- 汽水音乐 -->
-            <div class="software-card" data-category="other">
+            <div class="software-card" data-category="other" data-website="https://www.qishui.com/download">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('qishui-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #e84393 0%, #fd79a8 100%);">
                     <i class="fas fa-music"></i>
@@ -366,14 +473,13 @@
                 <h3 class="software-name">汽水音乐</h3>
                 <p class="software-desc">字节跳动推出的音乐平台</p>
                 <div class="button-group">
-                    <a href="https://www.qishui.com/download" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('qishui-detail')">详情</button>
                 </div>
                 <div class="category-tag">其他</div>
             </div>
 
             <!-- 剪映专业版 -->
-            <div class="software-card" data-category="other">
+            <div class="software-card" data-category="other" data-website="https://lv.ulikecam.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('jianying-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-film"></i>
@@ -381,14 +487,13 @@
                 <h3 class="software-name">剪映专业版</h3>
                 <p class="software-desc">专业的视频剪辑软件</p>
                 <div class="button-group">
-                    <a href="https://lv.ulikecam.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('jianying-detail')">详情</button>
                 </div>
                 <div class="category-tag">其他</div>
             </div>
 
             <!-- UU加速器 -->
-            <div class="software-card" data-category="other" title="游戏加速必备工具">
+            <div class="software-card" data-category="other" title="游戏加速必备工具" data-website="https://uu.163.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('uu-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
                     <i class="fas fa-tachometer-alt"></i>
@@ -396,14 +501,13 @@
                 <h3 class="software-name">UU加速器</h3>
                 <p class="software-desc">专业的游戏网络加速工具</p>
                 <div class="button-group">
-                    <a href="https://uu.163.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('uu-detail')">详情</button>
                 </div>
                 <div class="category-tag">其他</div>
             </div>
 
             <!-- GitHub -->
-            <div class="software-card" data-category="editor">
+            <div class="software-card" data-category="editor" data-website="https://github.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('github-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);">
                     <i class="fab fa-github"></i>
@@ -411,7 +515,6 @@
                 <h3 class="software-name">GitHub</h3>
                 <p class="software-desc">全球最大的代码托管平台</p>
                 <div class="button-group">
-                    <a href="https://github.com/" class="visit-btn" target="_blank">访问官网</a>
                     <button class="detail-btn" onclick="togglePopup('github-detail')">详情</button>
                 </div>
                 <div class="category-tag">编程</div>
@@ -765,6 +868,62 @@
           <li>代码托管与版本控制。</li>
           <li>Issues、PR 与项目协作。</li>
           <li>Actions 自动化与 Pages 部署。</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 软仓 RuanCang 详情 -->
+    <div id="ruancang-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('ruancang-detail')">&times;</span>
+        <h3>软仓 (RuanCang) 功能详情</h3>
+        <ul>
+          <li>宣称纯公益项目、无需注册、无广告。</li>
+          <li>提供绿色版与学习版软件资源。</li>
+          <li>覆盖设计、三维动画、影视后期、电子电路、办公等领域。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Convertio 详情 -->
+    <div id="convertio-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('convertio-detail')">&times;</span>
+        <h3>Convertio 功能详情</h3>
+        <ul>
+          <li>支持300+文件格式转换：文档、图片、视频、音频、电子书等。</li>
+          <li>多来源上传：本地、Dropbox、Google Drive、URL。</li>
+          <li>电子书格式互转：EPUB/MOBI/AZW3/PDF等。</li>
+          <li>拖放式上传界面，多语言支持（含中文）。</li>
+          <li>轻量使用免费，大文件需订阅。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Photopea 详情 -->
+    <div id="photopea-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('photopea-detail')">&times;</span>
+        <h3>Photopea 功能详情</h3>
+        <ul>
+          <li>完整支持PSD、Sketch等专业格式，在线直接编辑。</li>
+          <li>图层、滤镜、矢量绘图等专业功能。</li>
+          <li>兼容Photoshop快捷键，无需登录即可使用。</li>
+          <li>工具集齐全：套索、吸管、移动、画笔、橡皮擦、修复画笔、文字、渐变等。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Hotkey Cheatsheet 详情 -->
+    <div id="hotkey-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('hotkey-detail')">&times;</span>
+        <h3>Hotkey Cheatsheet 功能详情</h3>
+        <ul>
+          <li>支持Final Cut Pro、Photoshop、Premiere、After Effects等快捷键查询。</li>
+          <li>虚拟键盘显示，直观呈现按键布局。</li>
+          <li>Windows/Mac系统切换，便于跨平台使用。</li>
+          <li>完全免费无需注册，快速检索常用快捷键。</li>
         </ul>
       </div>
     </div>

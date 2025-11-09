@@ -13,48 +13,105 @@ function scrollTabs(direction) {
     updateScrollButtons();
 }
 
-// 主题切换功能
-function initThemeToggle() {
+// 主题切换与跟随系统功能
+function initThemeControls() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    const body = document.body;
-    
-    // 从localStorage获取保存的主题
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    
-    // 应用保存的主题
-    if (savedTheme === 'dark') {
-        body.setAttribute('data-theme', 'dark');
-        themeIcon.classList.remove('fa-sun');
-        themeIcon.classList.add('fa-moon');
-    }
-    
-    // 主题切换事件
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme');
-        
-        if (currentTheme === 'dark') {
-            body.setAttribute('data-theme', 'light');
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-            localStorage.setItem('theme', 'light');
-        } else {
-            body.setAttribute('data-theme', 'dark');
+    const followSystemCheckbox = document.getElementById('follow-system-checkbox');
+    const htmlEl = document.documentElement;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // 偏好：默认跟随系统，手动偏好默认暗色
+    let followSystem = true;
+    let manualTheme = 'dark';
+    try {
+        followSystem = JSON.parse(localStorage.getItem('followSystem') || 'true');
+        manualTheme = localStorage.getItem('theme') || 'dark';
+    } catch (e) {}
+
+    function updateIcon(theme) {
+        if (!themeIcon) return;
+        if (theme === 'dark') {
             themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
-            localStorage.setItem('theme', 'dark');
+        } else {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
         }
-        
-        // 添加切换动画效果
-        themeToggle.style.transform = 'scale(0.8)';
-        setTimeout(() => {
-            themeToggle.style.transform = 'scale(1)';
-        }, 150);
-    });
+    }
+
+    function applyTheme(theme) {
+        htmlEl.setAttribute('data-theme', theme);
+        updateIcon(theme);
+    }
+
+    function syncWithSystem() {
+        const theme = mediaQuery.matches ? 'dark' : 'light';
+        applyTheme(theme);
+    }
+
+    // 初始化复选框与主题
+    if (followSystemCheckbox) {
+        followSystemCheckbox.checked = !!followSystem;
+    }
+    if (followSystem) {
+        syncWithSystem();
+    } else {
+        applyTheme(manualTheme);
+    }
+
+    // 跟随系统开关变化
+    if (followSystemCheckbox) {
+        followSystemCheckbox.addEventListener('change', (e) => {
+            followSystem = e.target.checked;
+            localStorage.setItem('followSystem', JSON.stringify(followSystem));
+            if (followSystem) {
+                syncWithSystem();
+            } else {
+                applyTheme(manualTheme);
+            }
+        });
+    }
+
+    // 监听系统主题变化
+    if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', (e) => {
+            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
+        });
+    } else if (mediaQuery.addListener) {
+        mediaQuery.addListener((e) => {
+            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
+        });
+    }
+
+    // 手动切换按钮
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // 若当前开启跟随系统，点击手动切换将关闭跟随系统
+            if (followSystem) {
+                followSystem = false;
+                localStorage.setItem('followSystem', 'false');
+                if (followSystemCheckbox) followSystemCheckbox.checked = false;
+            }
+
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            manualTheme = newTheme;
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // 切换动画效果
+            themeToggle.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1)';
+            }, 150);
+        });
+    }
 }
 
-// 页面加载时初始化主题切换
-window.addEventListener('DOMContentLoaded', initThemeToggle);
+// 页面加载时初始化主题控制
+window.addEventListener('DOMContentLoaded', initThemeControls);
+window.addEventListener('DOMContentLoaded', initRocketController);
 
 function updateScrollButtons() {
     const tabsContainer = document.querySelector('.category-tabs');
@@ -394,4 +451,162 @@ function showCopySuccess(button) {
     button.innerHTML = originalHTML;
     button.classList.remove('copied');
   }, 2000);
+}
+// 火箭动画控制器：管理三种状态与粒子系统
+function initRocketController() {
+    const svg = document.getElementById('rocket-svg');
+    const wrap = document.getElementById('rocket-wrap');
+    const canvas = document.getElementById('rocket-particles');
+    const startBtn = document.getElementById('rocket-start-btn');
+    const loopBtn = document.getElementById('rocket-loop-btn');
+    const idleBtn = document.getElementById('rocket-idle-btn');
+    if (!svg || !wrap || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let state = 'idle'; // 'idle' | 'startup' | 'thrust'
+    let looping = false;
+    let particles = [];
+    const MAX_PARTICLES = 200; // 控制内存占用
+    let rafId = null;
+    let lastTime = performance.now();
+
+    function setState(next) {
+        state = next;
+        svg.classList.remove('state-idle', 'state-startup', 'state-thrust');
+        svg.classList.add(`state-${next}`);
+        // 尾翼展开类
+        if (next === 'idle') {
+            svg.classList.remove('fins-open');
+        } else {
+            svg.classList.add('fins-open');
+        }
+        wrap.setAttribute('aria-pressed', String(next !== 'idle'));
+    }
+
+    function resizeCanvas() {
+        const rect = wrap.getBoundingClientRect();
+        const w = Math.max(rect.width * 1.2, 160);
+        const h = Math.max(rect.height * 0.7, 120);
+        canvas.style.width = `${w}px`;
+        canvas.style.height = `${h}px`;
+        canvas.width = Math.floor(w * DPR);
+        canvas.height = Math.floor(h * DPR);
+    }
+
+    function emitParticles(intensity) {
+        // 在火焰出口附近生成粒子
+        const originX = canvas.width / 2;
+        const originY = canvas.height * 0.05;
+        const count = Math.floor(intensity * 8);
+        for (let i = 0; i < count; i++) {
+            if (particles.length >= MAX_PARTICLES) break;
+            const speed = 0.6 + Math.random() * 1.2;
+            const angle = (Math.random() - 0.5) * 0.3; // 稍微发散
+            particles.push({
+                x: originX + (Math.random() - 0.5) * 6 * DPR,
+                y: originY,
+                vx: Math.sin(angle) * speed * DPR,
+                vy: (1.5 + Math.random() * 1.2) * speed * DPR,
+                life: 1,
+                color: pickColor(),
+                size: 1 + Math.random() * 2
+            });
+        }
+    }
+
+    function pickColor() {
+        // 黄色→橙红→深红
+        const r = Math.random();
+        if (r < 0.33) return 'rgba(255,242,0,0.9)';
+        if (r < 0.66) return 'rgba(255,127,17,0.85)';
+        return 'rgba(192,57,43,0.8)';
+    }
+
+    function updateAndDraw(dt) {
+        // 清空画布
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 根据状态发射粒子
+        if (state === 'startup') emitParticles(0.7);
+        else if (state === 'thrust') emitParticles(1.2);
+        else emitParticles(0.15);
+
+        // 更新并绘制粒子
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx * dt * 0.06;
+            p.y += p.vy * dt * 0.06;
+            p.life -= 0.015 * dt * 0.06;
+            if (p.life <= 0 || p.y > canvas.height) {
+                particles.splice(i, 1);
+                continue;
+            }
+            const alpha = Math.max(p.life, 0) * 0.9;
+            ctx.beginPath();
+            ctx.fillStyle = p.color.replace(/0\.[0-9]+\)/, `${alpha})`);
+            ctx.arc(p.x, p.y, p.size * DPR, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function loop(now) {
+        const dt = Math.min(32, now - lastTime);
+        lastTime = now;
+        updateAndDraw(dt);
+        rafId = requestAnimationFrame(loop);
+    }
+
+    // 交互：点击火箭触发启动，然后进入全速 1s，再回到静止
+    function triggerStartupSequence() {
+        setState('startup');
+        setTimeout(() => {
+            setState('thrust');
+            setTimeout(() => setState('idle'), 1000);
+        }, 500);
+    }
+
+    function setLooping(on) {
+        looping = on;
+        loopBtn.setAttribute('aria-pressed', String(on));
+        loopBtn.textContent = `循环喷射：${on ? '开' : '关'}`;
+        if (on) {
+            // 自动循环：启动→全速→静止→间隔重复
+            if (!rafId) rafId = requestAnimationFrame(loop);
+            autoCycle();
+        } else {
+            // 停止自动循环但保持粒子动画运行
+            if (!rafId) rafId = requestAnimationFrame(loop);
+        }
+    }
+
+    let cycleTimer = null;
+    function autoCycle() {
+        clearTimeout(cycleTimer);
+        triggerStartupSequence();
+        cycleTimer = setTimeout(() => {
+            if (!looping) return;
+            autoCycle();
+        }, 1800);
+    }
+
+    // 事件绑定
+    wrap.addEventListener('click', triggerStartupSequence);
+    wrap.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerStartupSequence();
+        }
+    });
+    if (startBtn) startBtn.addEventListener('click', triggerStartupSequence);
+    if (idleBtn) idleBtn.addEventListener('click', () => setState('idle'));
+    if (loopBtn) loopBtn.addEventListener('click', () => setLooping(!looping));
+
+    // 启动动画主循环（rAF）
+    if (!rafId) rafId = requestAnimationFrame(loop);
 }
