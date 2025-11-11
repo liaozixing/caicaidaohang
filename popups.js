@@ -2,7 +2,7 @@
 function togglePopup(id) {
     const popup = document.getElementById(id);
     popup.classList.toggle('active');
-    document.body.style.overflow = popup.classList.contains('active') ? 'hidden' : '';
+    // 保持页面在弹窗打开时可滚动，不再锁定 body
 
     // 若是详情弹窗，打开时确保二维码容器关闭
     if (popup.classList.contains('active') && id.endsWith('-detail')) {
@@ -63,7 +63,7 @@ function initDetailMobileView() {
     wrapper.className = 'mobile-view';
     wrapper.innerHTML = `
       <div class="mobile-actions">
-        <button class="mobile-view-btn" type="button"><i class="fas fa-qrcode"></i> 在移动端查看</button>
+        <button class="mobile-view-btn" type="button"><i class="fas fa-qrcode"></i> 展开/收起二维码</button>
         <a class="official-website-btn" href="#" target="_blank" rel="noopener">访问官网</a>
       </div>
       <div class="qr-container"><img alt="二维码" /><p class="qr-hint">扫描二维码在手机打开官网</p></div>
@@ -85,20 +85,140 @@ function initDetailMobileView() {
       });
     }
 
+    // 无障碍属性初始化
+    btn.setAttribute('aria-expanded', 'false');
+    qr.setAttribute('aria-hidden', 'true');
+
     btn.addEventListener('click', () => {
-      const url = detailMap[popup.id] || '';
-      if (url) {
-        // 使用在线二维码生成服务
-        const api = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=' + encodeURIComponent(url);
-        img.src = api;
+      // 切换二维码容器展开/收起
+      const willOpen = !qr.classList.contains('open');
+      if (willOpen) {
+        const url = detailMap[popup.id] || '';
+        if (url) {
+          // 使用在线二维码生成服务
+          const api = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=' + encodeURIComponent(url);
+          img.src = api;
+        } else {
+          img.removeAttribute('src');
+          qr.querySelector('.qr-hint').textContent = '未找到官网链接，请稍后重试';
+        }
         qr.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        qr.setAttribute('aria-hidden', 'false');
       } else {
-        img.removeAttribute('src');
-        qr.classList.add('open');
-        qr.querySelector('.qr-hint').textContent = '未找到官网链接，请稍后重试';
+        qr.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        qr.setAttribute('aria-hidden', 'true');
       }
     });
   });
 }
 
-document.addEventListener('DOMContentLoaded', initDetailMobileView);
+// 注入液态玻璃 SVG 滤镜，并为详情弹窗启用液态玻璃样式
+function ensureLiquidGlassFilter() {
+  if (document.getElementById('liquid-glass-filter-defs')) return;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '0');
+  svg.setAttribute('height', '0');
+  svg.style.position = 'absolute';
+  svg.style.overflow = 'hidden';
+  svg.id = 'liquid-glass-filter-defs';
+
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+  filter.setAttribute('id', 'glass-distortion');
+  filter.setAttribute('x', '0%');
+  filter.setAttribute('y', '0%');
+  filter.setAttribute('width', '100%');
+  filter.setAttribute('height', '100%');
+
+  const turbulence = document.createElementNS('http://www.w3.org/2000/svg', 'feTurbulence');
+  turbulence.setAttribute('type', 'fractalNoise');
+  turbulence.setAttribute('baseFrequency', '0.008 0.008');
+  turbulence.setAttribute('numOctaves', '2');
+  turbulence.setAttribute('seed', '92');
+  turbulence.setAttribute('result', 'noise');
+
+  const blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+  blur.setAttribute('in', 'noise');
+  blur.setAttribute('stdDeviation', '2');
+  blur.setAttribute('result', 'blurred');
+
+  const displacement = document.createElementNS('http://www.w3.org/2000/svg', 'feDisplacementMap');
+  displacement.setAttribute('in', 'SourceGraphic');
+  displacement.setAttribute('in2', 'blurred');
+  displacement.setAttribute('scale', '77');
+  displacement.setAttribute('xChannelSelector', 'R');
+  displacement.setAttribute('yChannelSelector', 'G');
+
+  filter.appendChild(turbulence);
+  filter.appendChild(blur);
+  filter.appendChild(displacement);
+  defs.appendChild(filter);
+  svg.appendChild(defs);
+  document.body.appendChild(svg);
+}
+
+// 从 CSS 变量读取并同步到 SVG 滤镜
+function updateLiquidGlassFilterFromVars() {
+  const rootStyles = getComputedStyle(document.documentElement);
+  const freq = parseFloat(rootStyles.getPropertyValue('--noise-frequency')) || 0.008;
+  const strength = parseFloat(rootStyles.getPropertyValue('--distortion-strength')) || 77;
+  const svg = document.getElementById('liquid-glass-filter-defs');
+  if (!svg) return;
+  const t = svg.querySelector('feTurbulence');
+  const d = svg.querySelector('feDisplacementMap');
+  if (t) t.setAttribute('baseFrequency', `${freq} ${freq}`);
+  if (d) d.setAttribute('scale', String(strength));
+}
+
+function enableLiquidGlassOnDetails() {
+  document.querySelectorAll('.popup[id$="-detail"] .popup-content').forEach(el => {
+    el.classList.add('liquid-glass');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initDetailMobileView();
+  ensureLiquidGlassFilter();
+  updateLiquidGlassFilterFromVars();
+  enableLiquidGlassOnDetails();
+  startLiquidGlassAnimation();
+});
+
+// —— 液态玻璃动画：通过正弦波在频率与强度范围内平滑变化 ——
+let liquidAnimHandle = null;
+function startLiquidGlassAnimation() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+  const svg = document.getElementById('liquid-glass-filter-defs');
+  if (!svg) return;
+  const t = svg.querySelector('feTurbulence');
+  const d = svg.querySelector('feDisplacementMap');
+  if (!t || !d) return;
+  const styles = getComputedStyle(document.documentElement);
+  const fMin = parseFloat(styles.getPropertyValue('--noise-frequency-min')) || 0.004;
+  const fMax = parseFloat(styles.getPropertyValue('--noise-frequency-max')) || 0.012;
+  const sMin = parseFloat(styles.getPropertyValue('--distortion-min')) || 40;
+  const sMax = parseFloat(styles.getPropertyValue('--distortion-max')) || 80;
+  const speed = parseFloat(styles.getPropertyValue('--glass-anim-speed')) || 0.8; // 值越大越快
+  let start = performance.now();
+  function step(now) {
+    const tSec = (now - start) / 1000;
+    const wave = (Math.sin(tSec * speed) + 1) / 2; // 0..1
+    const freq = fMin + (fMax - fMin) * wave;
+    const scale = sMin + (sMax - sMin) * wave;
+    t.setAttribute('baseFrequency', `${freq} ${freq}`);
+    d.setAttribute('scale', String(scale));
+    liquidAnimHandle = requestAnimationFrame(step);
+  }
+  liquidAnimHandle = requestAnimationFrame(step);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && liquidAnimHandle) {
+      cancelAnimationFrame(liquidAnimHandle);
+      liquidAnimHandle = null;
+    } else if (!document.hidden && !liquidAnimHandle) {
+      startLiquidGlassAnimation();
+    }
+  });
+}

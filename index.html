@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>软件与网站导航 - 高效工具集合</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
     <script>
         // 预设主题，避免首次渲染闪烁
         (function() {
@@ -101,9 +104,7 @@
         </header>
         
         <div class="category-tabs-container">
-            <button class="tab-scroll-btn left" onclick="scrollTabs('left')">
-                <i class="fas fa-chevron-left"></i>
-            </button>
+            
             <div class="category-tabs">
                 <div class="tab active" data-category="all">全部软件</div>
                 <div class="tab" data-category="security">安全防护</div>
@@ -116,9 +117,7 @@
                 <div class="tab" data-category="editor">编程</div>
                 <div class="tab" data-category="other">其他</div>
             </div>
-            <button class="tab-scroll-btn right" onclick="scrollTabs('right')">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+            
         </div>
         
         <h2 class="category-title">精选软件推荐</h2>
@@ -308,7 +307,7 @@
 
             <!-- 软仓 RuanCang -->
             <!-- 官方链接占位符: ${__web_page_ruancang__} -->
-            <div class="software-card" data-category="tools" data-website="https://www.ruancang.net/">
+            <div class="software-card" data-category="design" data-website="https://www.ruancang.net/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('ruancang-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
                     <i class="fas fa-link"></i>
@@ -318,7 +317,7 @@
                 <div class="button-group">
                     <button class="detail-btn" onclick="togglePopup('ruancang-detail')">详情</button>
                 </div>
-                <div class="category-tag">工具</div>
+                <div class="category-tag">设计</div>
             </div>
 
             <!-- Convertio -->
@@ -338,7 +337,7 @@
 
             <!-- Photopea -->
             <!-- 官方链接占位符: ${__web_page_photopea__} -->
-            <div class="software-card" data-category="tools" data-website="https://www.photopea.com/">
+            <div class="software-card" data-category="design" data-website="https://www.photopea.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('photopea-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-image"></i>
@@ -348,7 +347,7 @@
                 <div class="button-group">
                     <button class="detail-btn" onclick="togglePopup('photopea-detail')">详情</button>
                 </div>
-                <div class="category-tag">工具</div>
+                <div class="category-tag">设计</div>
             </div>
 
             <!-- Hotkey Cheatsheet -->
@@ -407,6 +406,48 @@
                 </div>
                 <div class="category-tag">设计</div>
             </div>
+
+            <!-- LookAE -->
+            <div class="software-card" data-category="design" data-website="https://www.lookae.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('lookae-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3 class="software-name">LookAE</h3>
+                <p class="software-desc">专业AE模板与插件资源站，海量中文教程</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('lookae-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+
+            <!-- Motion Array -->
+            <div class="software-card" data-category="design" data-website="https://motionarray.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('motionarray-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h3 class="software-name">Motion Array</h3>
+                <p class="software-desc">高质量视频模板、音效与素材一站式下载</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('motionarray-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+
+            <!-- 新CG儿 -->
+            <div class="software-card" data-category="design" data-website="https://www.newcger.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('newcger-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00cec9 0%, #00b894 100%);">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="software-name">新CG儿</h3>
+                <p class="software-desc">数字视觉分享平台，免费AE模板与视频素材</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('newcger-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
             
             <!-- DeepSeek -->
             <div class="software-card" data-category="ai" data-website="https://chat.deepseek.com/">
@@ -446,6 +487,132 @@
                 <p class="software-desc">腾讯推出的AI创作与对话平台</p>
                 <div class="button-group">
                     <button class="detail-btn" onclick="togglePopup('yuanbao-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 秘塔AI搜索 -->
+            <div class="software-card" data-category="ai" data-website="https://metaso.cn/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('metaso-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="software-name">秘塔AI搜索</h3>
+                <p class="software-desc">无广告AI搜索引擎，直达结果</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('metaso-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 文心快码 -->
+            <div class="software-card" data-category="ai" data-website="https://comate.baidu.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('comate-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="software-name">文心快码</h3>
+                <p class="software-desc">百度AI编程助手，百种语言支持</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('comate-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 即梦AI -->
+            <div class="software-card" data-category="ai" data-website="https://dreamina.cn/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('dreamina-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="software-name">即梦AI</h3>
+                <p class="software-desc">字节跳动AI创作平台，文生图/视频</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('dreamina-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 堆友AI反应堆 -->
+            <div class="software-card" data-category="ai" data-website="https://d.design/ai">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('duiyou-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <h3 class="software-name">堆友AI反应堆</h3>
+                <p class="software-desc">阿里免费AI绘画，4K高清多风格</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('duiyou-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- ChatGPT -->
+            <div class="software-card" data-category="ai" data-website="https://chatgpt.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('chatgpt-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 class="software-name">ChatGPT</h3>
+                <p class="software-desc">OpenAI 通用对话与创作平台</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('chatgpt-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Claude -->
+            <div class="software-card" data-category="ai" data-website="https://claude.ai/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('claude-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="software-name">Claude</h3>
+                <p class="software-desc">Anthropic 高可靠对话与写作助手</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('claude-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Perplexity -->
+            <div class="software-card" data-category="ai" data-website="https://www.perplexity.ai/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('perplexity-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="software-name">Perplexity</h3>
+                <p class="software-desc">AI 搜索与问答，支持引用与网页浏览</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('perplexity-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Gemini -->
+            <div class="software-card" data-category="ai" data-website="https://gemini.google.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('gemini-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);">
+                    <i class="fab fa-google"></i>
+                </div>
+                <h3 class="software-name">Gemini</h3>
+                <p class="software-desc">Google 多模态 AI，对话/图像/代码</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('gemini-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Midjourney -->
+            <div class="software-card" data-category="ai" data-website="https://www.midjourney.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('midjourney-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Midjourney</h3>
+                <p class="software-desc">顶级 AI 绘画，Discord 社区驱动</p>
+                <div class="button-group">
+                    <button class="detail-btn" onclick="togglePopup('midjourney-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
@@ -927,12 +1094,180 @@
         </ul>
       </div>
     </div>
+
+    <!-- LookAE 详情 -->
+    <div id="lookae-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('lookae-detail')">&times;</span>
+        <h3>LookAE 功能详情</h3>
+        <ul>
+          <li>After Effects 模板、插件与脚本资源库。</li>
+          <li>分类清晰，含片头、转场、字幕条、HUD 等。</li>
+          <li>大部分资源免费下载，每日更新。</li>
+          <li>提供预览视频与使用教程，新手友好。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Motion Array 详情 -->
+    <div id="motionarray-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('motionarray-detail')">&times;</span>
+        <h3>Motion Array 功能详情</h3>
+        <ul>
+          <li>一站式视频模板、音效、音乐、素材平台。</li>
+          <li>支持 AE / PR / Final Cut / DaVinci 等主流软件。</li>
+          <li>无限下载订阅制，商用授权清晰。</li>
+          <li>在线协作审片，团队共享资源库。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 新CG儿 详情 -->
+    <div id="newcger-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('newcger-detail')">&times;</span>
+        <h3>新CG儿 功能详情</h3>
+        <ul>
+          <li>国内老牌 CG 资源分享社区。</li>
+          <li>AE / C4D / 3ds Max 模板、模型、插件齐全。</li>
+          <li>免费资源占比高，积分下载制。</li>
+          <li>活跃论坛与作品展示区，便于学习交流。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ChatGPT 详情 -->
+    <div id="chatgpt-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('chatgpt-detail')">&times;</span>
+        <h3>ChatGPT 功能详情</h3>
+        <ul>
+          <li>通用对话、写作、代码、数据分析与图像理解。</li>
+          <li>支持 GPT-4 级能力与多模态（视地域与账号权限）。</li>
+          <li>生态丰富：插件、文件上传、团队协作等。</li>
+          <li>访问建议：需科学上网，注册需海外邮箱/手机号。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Claude 详情 -->
+    <div id="claude-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('claude-detail')">&times;</span>
+        <h3>Claude 功能详情</h3>
+        <ul>
+          <li>安全与可靠性优先，长文本理解与写作出色。</li>
+          <li>支持文件解析、代码辅助、结构化表格提取。</li>
+          <li>团队版支持共享项目与更高上下文。</li>
+          <li>访问建议：需科学上网，登录需海外手机号验证。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Perplexity 详情 -->
+    <div id="perplexity-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('perplexity-detail')">&times;</span>
+        <h3>Perplexity 功能详情</h3>
+        <ul>
+          <li>AI 搜索与问答，给出引用来源与可追踪链接。</li>
+          <li>支持网页浏览、文件上传与细化追问。</li>
+          <li>适合资料检索、学习与写作调研。</li>
+          <li>访问建议：通常需科学上网，国内网络不稳定。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Gemini 详情 -->
+    <div id="gemini-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('gemini-detail')">&times;</span>
+        <h3>Gemini 功能详情</h3>
+        <ul>
+          <li>Google 多模态模型，图像/文本/代码理解与生成。</li>
+          <li>与 Google 生态集成，支持 Drive 与文档协作。</li>
+          <li>适合研究与多模态创意场景。</li>
+          <li>访问建议：需科学上网并使用 Google 账户。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Midjourney 详情 -->
+    <div id="midjourney-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('midjourney-detail')">&times;</span>
+        <h3>Midjourney 功能详情</h3>
+        <ul>
+          <li>行业领先的 AI 绘画，风格独特、质量极高。</li>
+          <li>通过 Discord 使用，支持私聊与频道创作。</li>
+          <li>适合品牌视觉、概念设计与艺术创作。</li>
+          <li>访问建议：需科学上网，并可用 Discord 账户。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 秘塔AI搜索 详情 -->
+    <div id="metaso-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('metaso-detail')">&times;</span>
+        <h3>秘塔AI搜索 功能详情</h3>
+        <ul>
+          <li>无广告、无追踪，直达精准答案。</li>
+          <li>支持多轮对话与追问，自动总结要点。</li>
+          <li>提供引用来源，支持学术与专业检索。</li>
+          <li>每日免费额度充足，无需登录即可使用。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 文心快码 详情 -->
+    <div id="comate-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('comate-detail')">&times;</span>
+        <h3>文心快码 功能详情</h3>
+        <ul>
+          <li>百度自研大模型，支持100+编程语言。</li>
+          <li>实时代码续写、单测生成、注释与解释。</li>
+          <li>插件版支持VS Code / JetBrains全家桶。</li>
+          <li>个人版免费，企业版支持私有部署。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 即梦AI 详情 -->
+    <div id="dreamina-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('dreamina-detail')">&times;</span>
+        <h3>即梦AI 功能详情</h3>
+        <ul>
+          <li>一站式AI图片、视频、音乐生成。</li>
+          <li>中文提示词友好，模板丰富易上手。</li>
+          <li>智能画布支持多图融合与局部重绘。</li>
+          <li>每日免费积分，连续签到奖励翻倍。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 堆友AI反应堆 详情 -->
+    <div id="duiyou-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('duiyou-detail')">&times;</span>
+        <h3>堆友AI反应堆 功能详情</h3>
+        <ul>
+          <li>阿里自研SD XL模型，4K分辨率秒级出图。</li>
+          <li>15+固定风格+自定义融合，支持图生图。</li>
+          <li>1000+免费商用3D模型，在线调光调色。</li>
+          <li>每日登录即送堆豆，0门槛商用无忧。</li>
+        </ul>
+      </div>
+    </div>
     <!-- 回到顶部按钮 -->
     <button id="back-to-top" title="回到顶部" style="display:none;position:fixed;right:30px;bottom:40px;z-index:2000;width:48px;height:48px;border:none;border-radius:50%;background:#3498db;color:#fff;font-size:2rem;box-shadow:0 4px 12px rgba(52,152,219,0.2);cursor:pointer;transition:background 0.3s;">
       <i class="fas fa-arrow-up"></i>
     </button>
     
-    <script src="script.js"></script>
-    <script src="popups.js"></script>
+<script src="script.js" defer></script>
+<script src="popups.js" defer></script>
 </body>
 </html>

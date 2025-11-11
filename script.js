@@ -117,16 +117,22 @@ function updateScrollButtons() {
     const tabsContainer = document.querySelector('.category-tabs');
     const leftBtn = document.querySelector('.tab-scroll-btn.left');
     const rightBtn = document.querySelector('.tab-scroll-btn.right');
-    
+
+    // 如按钮不存在（已移除），直接退出避免错误
+    if (!tabsContainer || !leftBtn || !rightBtn) return;
+
     // 检查是否可以向左滚动
     leftBtn.disabled = tabsContainer.scrollLeft <= 0;
-    
+
     // 检查是否可以向右滚动
     rightBtn.disabled = tabsContainer.scrollLeft >= tabsContainer.scrollWidth - tabsContainer.clientWidth;
 }
 
 // 监听滚动事件以更新按钮状态
-document.querySelector('.category-tabs').addEventListener('scroll', updateScrollButtons);
+{
+  const container = document.querySelector('.category-tabs');
+  if (container) container.addEventListener('scroll', updateScrollButtons, { passive: true });
+}
 
 // 页面加载时初始化按钮状态
 window.addEventListener('load', updateScrollButtons);
@@ -329,7 +335,7 @@ style.textContent = `
     .software-card {
         opacity: 0;
         transform: translateY(20px);
-        transition: all 0.3s ease-out;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     }
     
     .search-active {
@@ -388,7 +394,7 @@ if (backToTopBtn) {
     } else {
       backToTopBtn.style.display = 'none';
     }
-  });
+  }, { passive: true });
   backToTopBtn.addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
@@ -610,3 +616,22 @@ function initRocketController() {
     // 启动动画主循环（rAF）
     if (!rafId) rafId = requestAnimationFrame(loop);
 }
+
+// 统一为按钮与标签应用液态玻璃视觉类
+function applyGlassUI() {
+    const selectors = [
+        '.visit-btn',
+        '.mobile-view-btn',
+        '.official-website-btn',
+        '.tab-scroll-btn',
+        '.category-tag',
+        '.copy-btn',
+        '.pagination button',
+        '#back-to-top',
+        '.tab'
+    ];
+    const list = document.querySelectorAll(selectors.join(','));
+    list.forEach(el => el.classList.add('glass-ui'));
+}
+
+window.addEventListener('DOMContentLoaded', applyGlassUI);
