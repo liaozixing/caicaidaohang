@@ -147,6 +147,7 @@ document.querySelectorAll('.tab').forEach(tab => {
         
         const category = this.getAttribute('data-category');
         const categoryTitle = document.querySelector('.category-title');
+        const emptyEl = document.querySelector('.empty-category') || createEmptyCategoryElement();
         
         // 更新分类标题
         if (category === 'all') {
@@ -161,12 +162,14 @@ document.querySelectorAll('.tab').forEach(tab => {
                 'design': '设计创意',
                 'ai': 'AI平台',
                 'editor': '编程',
-                'other': '其他'
+                'other': '其他',
+                'self': '自研'
             };
-            categoryTitle.textContent = categoryNames[category] + '软件';
+            categoryTitle.textContent = (categoryNames[category] || '自研') + (category === 'self' ? '' : '软件');
         }
         
         // 显示/隐藏软件卡片，添加动画效果
+        let visibleCount = 0;
         document.querySelectorAll('.software-card').forEach((card, index) => {
             if (category === 'all' || card.getAttribute('data-category') === category) {
                 card.style.display = 'flex';
@@ -175,6 +178,7 @@ document.querySelectorAll('.tab').forEach(tab => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
                 }, index * 50);
+                visibleCount++;
             } else {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';
@@ -183,6 +187,24 @@ document.querySelectorAll('.tab').forEach(tab => {
                 }, 300);
             }
         });
+
+        // 空分类提示：无匹配卡片时显示“正在开发中”
+        if (category !== 'all') {
+            if (visibleCount === 0) {
+                emptyEl.querySelector('p').textContent = '正在开发中';
+                emptyEl.style.display = 'flex';
+                setTimeout(() => {
+                    emptyEl.style.opacity = '1';
+                    emptyEl.style.transform = 'translateY(0)';
+                }, 100);
+            } else {
+                emptyEl.style.opacity = '0';
+                emptyEl.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    emptyEl.style.display = 'none';
+                }, 300);
+            }
+        }
     });
 });
 
@@ -257,6 +279,23 @@ function createNoResultsElement() {
     `;
     document.querySelector('.software-grid').appendChild(noResults);
     return noResults;
+}
+
+// 创建空分类提示元素
+function createEmptyCategoryElement() {
+    const titleEl = document.querySelector('.category-title');
+    const el = document.createElement('div');
+    el.className = 'empty-category';
+    el.innerHTML = '<i class="fas fa-hammer"></i><h3>暂无内容</h3><p>正在开发中</p>';
+    el.style.display = 'none';
+    if (titleEl && titleEl.parentNode) {
+        // 插入到分类标题 h2 的后面
+        titleEl.parentNode.insertBefore(el, titleEl.nextSibling);
+    } else {
+        // 兜底：若未找到标题，则附加到 body
+        document.body.appendChild(el);
+    }
+    return el;
 }
 
 // 搜索框输入事件
@@ -372,6 +411,21 @@ style.textContent = `
     .no-results p {
         color: #95a5a6;
     }
+    .empty-category {
+        display: none;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease-out;
+        text-align: center;
+        padding: 40px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .empty-category i { font-size: 3em; color: #95a5a6; margin-bottom: 20px; }
+    .empty-category h3 { color: #2c3e50; margin-bottom: 10px; }
+    .empty-category p { color: #95a5a6; }
 `;
 document.head.appendChild(style);
 
@@ -400,6 +454,19 @@ if (backToTopBtn) {
   });
 }
 
+// 一键到底部按钮功能
+const scrollToBottomBtn = document.getElementById('scroll-to-bottom');
+if (scrollToBottomBtn) {
+  window.addEventListener('scroll', function() {
+    const atBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10);
+    scrollToBottomBtn.style.display = atBottom ? 'none' : 'block';
+  }, { passive: true });
+  scrollToBottomBtn.addEventListener('click', function() {
+    const totalHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    window.scrollTo({ top: totalHeight, behavior: 'smooth' });
+  });
+}
+
 // 复制QQ号功能
 function copyQQ(button) {
   const qqNumber = document.getElementById('qq-number').textContent;
@@ -417,6 +484,21 @@ function copyQQ(button) {
   } else {
     // 使用备用方法
     fallbackCopyTextToClipboard(qqNumber, copyBtn);
+  }
+}
+
+// 复制邮箱功能
+function copyEmail(button) {
+  const email = document.getElementById('email-address').textContent;
+  const copyBtn = button;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(() => {
+      showCopySuccess(copyBtn);
+    }).catch(err => {
+      fallbackCopyTextToClipboard(email, copyBtn);
+    });
+  } else {
+    fallbackCopyTextToClipboard(email, copyBtn);
   }
 }
 

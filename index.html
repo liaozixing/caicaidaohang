@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>软件与网站导航 - 高效工具集合</title>
+    <title>蔡蔡导航</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
             </div>
             <!-- Rocket Stage: 位于顶部导航与主内容之间的白色空白区域中央 -->
             <div class="rocket-stage" aria-label="火箭动画舞台">
-                <div class="rocket-wrap" id="rocket-wrap" tabindex="0" role="button" aria-pressed="false" aria-description="点击触发启动动画，按钮可切换循环喷射">
+    <div class="rocket-wrap" id="rocket-wrap" tabindex="0" role="button" aria-pressed="false" aria-description="点击触发启动动画，按钮可切换循环喷射">
                     <!-- 粒子画布（在火焰下方） -->
                     <canvas id="rocket-particles" class="rocket-particles" width="320" height="180" aria-hidden="true"></canvas>
                     <!-- 火箭 SVG：SVG+CSS 动画实现主体视觉 -->
@@ -90,7 +90,7 @@
                 </div>
                 <div class="rocket-controls" role="group" aria-label="火箭动画控制"></div>
             </div>
-            <h1>软件与网站导航</h1>
+            <h1>蔡蔡导航</h1>
             <p class="subtitle">精选高效实用工具与优质网站，一站式访问官方网站与资源</p>
             
             <div class="search-container">
@@ -107,15 +107,16 @@
             
             <div class="category-tabs">
                 <div class="tab active" data-category="all">全部软件</div>
-                <div class="tab" data-category="security">安全防护</div>
-                <div class="tab" data-category="tools">实用工具</div>
-                <div class="tab" data-category="multimedia">多媒体</div>
-                <div class="tab" data-category="social">社交办公</div>
-                <div class="tab" data-category="gaming">游戏平台</div>
-                <div class="tab" data-category="design">设计创意</div>
-                <div class="tab" data-category="ai">AI平台</div>
-                <div class="tab" data-category="editor">编程</div>
-                <div class="tab" data-category="other">其他</div>
+        <div class="tab glass-ui" data-category="security">安全防护</div>
+        <div class="tab glass-ui" data-category="tools">实用工具</div>
+        <div class="tab glass-ui" data-category="multimedia">多媒体</div>
+        <div class="tab glass-ui" data-category="social">社交办公</div>
+        <div class="tab glass-ui" data-category="gaming">游戏平台</div>
+        <div class="tab glass-ui" data-category="design">设计创意</div>
+<div class="tab glass-ui" data-category="ai">AI平台</div>
+<div class="tab glass-ui" data-category="editor">编程</div>
+<div class="tab glass-ui" data-category="other">其他</div>
+<div class="tab glass-ui" data-category="self">自研</div>
             </div>
             
         </div>
@@ -124,7 +125,7 @@
         
         <div class="software-grid">
             <!-- VS Code -->
-            <div class="software-card" data-category="editor" data-website="https://code.visualstudio.com/">
+    <div class="software-card glass-ui" data-category="editor" data-website="https://code.visualstudio.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('vscode-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #007ACC 0%, #005999 100%);">
                     <i class="fas fa-code"></i>
@@ -132,13 +133,13 @@
                 <h3 class="software-name">Visual Studio Code</h3>
                 <p class="software-desc">轻量级强大的代码编辑器</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('vscode-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('vscode-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- PyCharm -->
-            <div class="software-card" data-category="editor" data-website="https://www.jetbrains.com/pycharm/">
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.jetbrains.com/pycharm/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('pycharm-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #21D789 0%, #1A9F6B 100%);">
                     <i class="fab fa-python"></i>
@@ -146,13 +147,13 @@
                 <h3 class="software-name">PyCharm</h3>
                 <p class="software-desc">专业的Python IDE</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('pycharm-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('pycharm-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- WebStorm -->
-            <div class="software-card" data-category="editor" data-website="https://www.jetbrains.com/webstorm/">
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.jetbrains.com/webstorm/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('webstorm-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);">
                     <i class="fab fa-js"></i>
@@ -160,13 +161,13 @@
                 <h3 class="software-name">WebStorm</h3>
                 <p class="software-desc">智能的JavaScript IDE</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('webstorm-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('webstorm-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- IntelliJ IDEA -->
-            <div class="software-card" data-category="editor" data-website="https://www.jetbrains.com/idea/">
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.jetbrains.com/idea/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('intellij-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #000000 0%, #333333 100%);">
                     <i class="fas fa-coffee"></i>
@@ -174,13 +175,13 @@
                 <h3 class="software-name">IntelliJ IDEA</h3>
                 <p class="software-desc">强大的Java IDE</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('intellij-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('intellij-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- Sublime Text -->
-            <div class="software-card" data-category="editor" data-website="https://www.sublimetext.com/">
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.sublimetext.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('sublime-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);">
                     <i class="fas fa-file-code"></i>
@@ -188,13 +189,13 @@
                 <h3 class="software-name">Sublime Text</h3>
                 <p class="software-desc">轻量级文本编辑器</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('sublime-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('sublime-detail')">详情</button>
                 </div>
                 <div class="category-tag">编辑器</div>
             </div>
 
             <!-- 火绒安全 -->
-            <div class="software-card" data-category="security" data-website="https://www.huorong.cn/">
+    <div class="software-card glass-ui" data-category="security" data-website="https://www.huorong.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('huorong-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">
                     <i class="fas fa-shield-alt"></i>
@@ -202,13 +203,13 @@
                 <h3 class="software-name">火绒安全</h3>
                 <p class="software-desc">轻量级安全防护软件，专注终端安全</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('huorong-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('huorong-detail')">详情</button>
                 </div>
                 <div class="category-tag">安全</div>
             </div>
             
             <!-- WeGame -->
-            <div class="software-card" data-category="gaming" data-website="https://www.wegame.com.cn/">
+    <div class="software-card glass-ui" data-category="gaming" data-website="https://www.wegame.com.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('wegame-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #fbc531 0%, #e1b12c 100%);">
                     <i class="fas fa-gamepad"></i>
@@ -216,13 +217,13 @@
                 <h3 class="software-name">WeGame</h3>
                 <p class="software-desc">腾讯官方游戏平台，提供游戏下载与管理</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('wegame-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('wegame-detail')">详情</button>
                 </div>
                 <div class="category-tag">游戏</div>
             </div>
 
             <!-- Steam -->
-            <div class="software-card" data-category="gaming" title="访问Steam需要加速器" data-website="https://store.steampowered.com/">
+    <div class="software-card glass-ui" data-category="gaming" title="访问Steam需要加速器" data-website="https://store.steampowered.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('steam-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #171a21 0%, #2a475e 100%);">
                     <i class="fab fa-steam"></i>
@@ -230,13 +231,13 @@
                 <h3 class="software-name">Steam</h3>
                 <p class="software-desc">全球最大的数字游戏发行平台</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('steam-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('steam-detail')">详情</button>
                 </div>
                 <div class="category-tag">游戏</div>
             </div>
             
             <!-- Office Tool -->
-            <div class="software-card" data-category="tools" data-website="https://otp.landian.vip/">
+    <div class="software-card glass-ui" data-category="tools" data-website="https://otp.landian.vip/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('office-tool-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #1dd1a1 0%, #10ac84 100%);">
                     <i class="fas fa-wrench"></i>
@@ -244,13 +245,13 @@
                 <h3 class="software-name">Office Tool</h3>
                 <p class="software-desc">强大的Office部署管理工具</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('office-tool-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('office-tool-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- 图吧工具箱 -->
-            <div class="software-card" data-category="tools" data-website="http://www.tbtool.cn/">
+    <div class="software-card glass-ui" data-category="tools" data-website="http://www.tbtool.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('tbtool-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #54a0ff 0%, #2e86de 100%);">
                     <i class="fas fa-toolbox"></i>
@@ -258,13 +259,13 @@
                 <h3 class="software-name">图吧工具箱</h3>
                 <p class="software-desc">硬件检测与系统维护工具集合</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('tbtool-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('tbtool-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- Bandizip -->
-            <div class="software-card" data-category="tools" data-website="https://www.bandisoft.com/bandizip/">
+    <div class="software-card glass-ui" data-category="tools" data-website="https://www.bandisoft.com/bandizip/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('bandizip-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #feca57 0%, #ff9f43 100%);">
                     <i class="fas fa-file-archive"></i>
@@ -272,13 +273,13 @@
                 <h3 class="software-name">Bandizip</h3>
                 <p class="software-desc">高效轻量的压缩解压工具</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('bandizip-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('bandizip-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- PotPlayer -->
-            <div class="software-card" data-category="multimedia" data-website="https://potplayer.daum.net/">
+    <div class="software-card glass-ui" data-category="multimedia" data-website="https://potplayer.daum.net/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('potplayer-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #5f27cd 0%, #341f97 100%);">
                     <i class="fas fa-play-circle"></i>
@@ -286,13 +287,13 @@
                 <h3 class="software-name">PotPlayer</h3>
                 <p class="software-desc">功能强大的多媒体播放器</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('potplayer-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('potplayer-detail')">详情</button>
                 </div>
                 <div class="category-tag">多媒体</div>
             </div>
             
             <!-- HiBitUninstaller -->
-            <div class="software-card" data-category="tools" data-website="https://hibitsoft.ir/">
+    <div class="software-card glass-ui" data-category="tools" data-website="https://hibitsoft.ir/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('hibit-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);">
                     <i class="fas fa-trash-alt"></i>
@@ -300,14 +301,14 @@
                 <h3 class="software-name">HiBitUninstaller</h3>
                 <p class="software-desc">强大的软件卸载清理工具</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('hibit-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('hibit-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
 
             <!-- 软仓 RuanCang -->
             <!-- 官方链接占位符: ${__web_page_ruancang__} -->
-            <div class="software-card" data-category="design" data-website="https://www.ruancang.net/">
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.ruancang.net/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('ruancang-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
                     <i class="fas fa-link"></i>
@@ -315,14 +316,14 @@
                 <h3 class="software-name">软仓 (RuanCang)</h3>
                 <p class="software-desc">软件资源导航网站，提供设计/三维/后期/电子/办公等资源</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('ruancang-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('ruancang-detail')">详情</button>
                 </div>
                 <div class="category-tag">设计</div>
             </div>
 
             <!-- Convertio -->
             <!-- 官方链接占位符: ${__web_page_convertio__} -->
-            <div class="software-card" data-category="tools" data-website="https://convertio.co/">
+    <div class="software-card glass-ui" data-category="tools" data-website="https://convertio.co/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('convertio-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
                     <i class="fas fa-exchange-alt"></i>
@@ -330,14 +331,14 @@
                 <h3 class="software-name">Convertio</h3>
                 <p class="software-desc">在线格式转换平台，支持300+格式和多来源上传</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('convertio-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('convertio-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
 
             <!-- Photopea -->
             <!-- 官方链接占位符: ${__web_page_photopea__} -->
-            <div class="software-card" data-category="design" data-website="https://www.photopea.com/">
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.photopea.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('photopea-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-image"></i>
@@ -345,14 +346,14 @@
                 <h3 class="software-name">Photopea</h3>
                 <p class="software-desc">在线图像编辑器，支持PSD等专业格式与PS快捷键</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('photopea-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('photopea-detail')">详情</button>
                 </div>
                 <div class="category-tag">设计</div>
             </div>
 
             <!-- Hotkey Cheatsheet -->
             <!-- 官方链接占位符: ${__web_page_hotkey__} -->
-            <div class="software-card" data-category="tools" data-website="https://hotkeycheatsheet.com/zh">
+    <div class="software-card glass-ui" data-category="tools" data-website="https://hotkeycheatsheet.com/zh">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('hotkey-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
                     <i class="fas fa-keyboard"></i>
@@ -360,13 +361,13 @@
                 <h3 class="software-name">Hotkey Cheatsheet</h3>
                 <p class="software-desc">专业软件快捷键查询，虚拟键盘显示，Windows/Mac切换</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('hotkey-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('hotkey-detail')">详情</button>
                 </div>
                 <div class="category-tag">工具</div>
             </div>
             
             <!-- 微信 -->
-            <div class="software-card" data-category="social" data-website="https://weixin.qq.com/">
+    <div class="software-card glass-ui" data-category="social" data-website="https://weixin.qq.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('wechat-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #0be881 0%, #05c46b 100%);">
                     <i class="fab fa-weixin"></i>
@@ -374,13 +375,13 @@
                 <h3 class="software-name">微信</h3>
                 <p class="software-desc">跨平台通讯社交应用</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('wechat-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('wechat-detail')">详情</button>
                 </div>
                 <div class="category-tag">社交</div>
             </div>
             
             <!-- QQ -->
-            <div class="software-card" data-category="social" data-website="https://im.qq.com/">
+    <div class="software-card glass-ui" data-category="social" data-website="https://im.qq.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('qq-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #1a5276 100%);">
                     <i class="fab fa-qq"></i>
@@ -388,13 +389,13 @@
                 <h3 class="software-name">QQ</h3>
                 <p class="software-desc">腾讯即时通讯软件</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('qq-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('qq-detail')">详情</button>
                 </div>
                 <div class="category-tag">社交</div>
             </div>
             
             <!-- Adobe Creative Cloud -->
-            <div class="software-card" data-category="design" data-website="https://www.adobe.com/cn/creativecloud/roc/business.html">
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.adobe.com/cn/creativecloud/roc/business.html">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('adobe-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #5dade2 0%, #2874a6 100%);">
                     <i class="fas fa-cloud"></i>
@@ -402,13 +403,13 @@
                 <h3 class="software-name">Adobe Creative Cloud</h3>
                 <p class="software-desc">创意设计软件套装</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('adobe-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('adobe-detail')">详情</button>
                 </div>
                 <div class="category-tag">设计</div>
             </div>
 
             <!-- LookAE -->
-            <div class="software-card" data-category="design" data-website="https://www.lookae.com/">
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.lookae.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('lookae-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);">
                     <i class="fas fa-layer-group"></i>
@@ -416,13 +417,13 @@
                 <h3 class="software-name">LookAE</h3>
                 <p class="software-desc">专业AE模板与插件资源站，海量中文教程</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('lookae-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('lookae-detail')">详情</button>
                 </div>
                 <div class="category-tag">设计</div>
             </div>
 
             <!-- Motion Array -->
-            <div class="software-card" data-category="design" data-website="https://motionarray.com/">
+    <div class="software-card glass-ui" data-category="design" data-website="https://motionarray.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('motionarray-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-play-circle"></i>
@@ -430,13 +431,13 @@
                 <h3 class="software-name">Motion Array</h3>
                 <p class="software-desc">高质量视频模板、音效与素材一站式下载</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('motionarray-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('motionarray-detail')">详情</button>
                 </div>
                 <div class="category-tag">设计</div>
             </div>
 
             <!-- 新CG儿 -->
-            <div class="software-card" data-category="design" data-website="https://www.newcger.com/">
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.newcger.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('newcger-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00cec9 0%, #00b894 100%);">
                     <i class="fas fa-video"></i>
@@ -444,13 +445,13 @@
                 <h3 class="software-name">新CG儿</h3>
                 <p class="software-desc">数字视觉分享平台，免费AE模板与视频素材</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('newcger-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('newcger-detail')">详情</button>
                 </div>
                 <div class="category-tag">设计</div>
             </div>
             
             <!-- DeepSeek -->
-            <div class="software-card" data-category="ai" data-website="https://chat.deepseek.com/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://chat.deepseek.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('deepseek-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-brain"></i>
@@ -458,13 +459,13 @@
                 <h3 class="software-name">DeepSeek</h3>
                 <p class="software-desc">强大的AI对话与创作平台</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('deepseek-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('deepseek-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 豆包AI -->
-            <div class="software-card" data-category="ai" data-website="https://www.doubao.com/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://www.doubao.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('doubao-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
                     <i class="fas fa-robot"></i>
@@ -472,13 +473,13 @@
                 <h3 class="software-name">豆包AI</h3>
                 <p class="software-desc">字节跳动推出的AI助手平台</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('doubao-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('doubao-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 腾讯元宝 -->
-            <div class="software-card" data-category="ai" data-website="https://yuanbao.tencent.com/app/list">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://yuanbao.tencent.com/app/list">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('yuanbao-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
                     <i class="fas fa-robot"></i>
@@ -486,13 +487,13 @@
                 <h3 class="software-name">腾讯元宝</h3>
                 <p class="software-desc">腾讯推出的AI创作与对话平台</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('yuanbao-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('yuanbao-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 秘塔AI搜索 -->
-            <div class="software-card" data-category="ai" data-website="https://metaso.cn/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://metaso.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('metaso-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);">
                     <i class="fas fa-search"></i>
@@ -500,13 +501,13 @@
                 <h3 class="software-name">秘塔AI搜索</h3>
                 <p class="software-desc">无广告AI搜索引擎，直达结果</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('metaso-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('metaso-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 文心快码 -->
-            <div class="software-card" data-category="ai" data-website="https://comate.baidu.com/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://comate.baidu.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('comate-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
                     <i class="fas fa-code"></i>
@@ -514,13 +515,13 @@
                 <h3 class="software-name">文心快码</h3>
                 <p class="software-desc">百度AI编程助手，百种语言支持</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('comate-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('comate-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 即梦AI -->
-            <div class="software-card" data-category="ai" data-website="https://dreamina.cn/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://dreamina.cn/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('dreamina-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-palette"></i>
@@ -528,13 +529,13 @@
                 <h3 class="software-name">即梦AI</h3>
                 <p class="software-desc">字节跳动AI创作平台，文生图/视频</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('dreamina-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('dreamina-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- 堆友AI反应堆 -->
-            <div class="software-card" data-category="ai" data-website="https://d.design/ai">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://d.design/ai">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('duiyou-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
                     <i class="fas fa-fire"></i>
@@ -542,13 +543,13 @@
                 <h3 class="software-name">堆友AI反应堆</h3>
                 <p class="software-desc">阿里免费AI绘画，4K高清多风格</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('duiyou-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('duiyou-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- ChatGPT -->
-            <div class="software-card" data-category="ai" data-website="https://chatgpt.com/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://chatgpt.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('chatgpt-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
                     <i class="fas fa-comments"></i>
@@ -556,13 +557,13 @@
                 <h3 class="software-name">ChatGPT</h3>
                 <p class="software-desc">OpenAI 通用对话与创作平台</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('chatgpt-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('chatgpt-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- Claude -->
-            <div class="software-card" data-category="ai" data-website="https://claude.ai/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://claude.ai/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('claude-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);">
                     <i class="fas fa-brain"></i>
@@ -570,13 +571,13 @@
                 <h3 class="software-name">Claude</h3>
                 <p class="software-desc">Anthropic 高可靠对话与写作助手</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('claude-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('claude-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- Perplexity -->
-            <div class="software-card" data-category="ai" data-website="https://www.perplexity.ai/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://www.perplexity.ai/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('perplexity-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
                     <i class="fas fa-search"></i>
@@ -584,13 +585,13 @@
                 <h3 class="software-name">Perplexity</h3>
                 <p class="software-desc">AI 搜索与问答，支持引用与网页浏览</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('perplexity-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('perplexity-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- Gemini -->
-            <div class="software-card" data-category="ai" data-website="https://gemini.google.com/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://gemini.google.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('gemini-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);">
                     <i class="fab fa-google"></i>
@@ -598,13 +599,13 @@
                 <h3 class="software-name">Gemini</h3>
                 <p class="software-desc">Google 多模态 AI，对话/图像/代码</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('gemini-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('gemini-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- Midjourney -->
-            <div class="software-card" data-category="ai" data-website="https://www.midjourney.com/">
+    <div class="software-card glass-ui" data-category="ai" data-website="https://www.midjourney.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('midjourney-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">
                     <i class="fas fa-image"></i>
@@ -612,13 +613,13 @@
                 <h3 class="software-name">Midjourney</h3>
                 <p class="software-desc">顶级 AI 绘画，Discord 社区驱动</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('midjourney-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('midjourney-detail')">详情</button>
                 </div>
                 <div class="category-tag">AI</div>
             </div>
 
             <!-- Cursor -->
-            <div class="software-card" data-category="editor" data-website="https://cursor.sh/">
+    <div class="software-card glass-ui" data-category="editor" data-website="https://cursor.sh/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('cursor-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
                     <i class="fas fa-code"></i>
@@ -626,13 +627,13 @@
                 <h3 class="software-name">Cursor</h3>
                 <p class="software-desc">AI驱动的智能代码编辑器</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('cursor-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('cursor-detail')">详情</button>
                 </div>
                 <div class="category-tag">编程</div>
             </div>
 
             <!-- 汽水音乐 -->
-            <div class="software-card" data-category="other" data-website="https://www.qishui.com/download">
+    <div class="software-card glass-ui" data-category="other" data-website="https://www.qishui.com/download">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('qishui-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #e84393 0%, #fd79a8 100%);">
                     <i class="fas fa-music"></i>
@@ -640,13 +641,13 @@
                 <h3 class="software-name">汽水音乐</h3>
                 <p class="software-desc">字节跳动推出的音乐平台</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('qishui-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('qishui-detail')">详情</button>
                 </div>
                 <div class="category-tag">其他</div>
             </div>
 
             <!-- 剪映专业版 -->
-            <div class="software-card" data-category="other" data-website="https://lv.ulikecam.com/">
+    <div class="software-card glass-ui" data-category="other" data-website="https://lv.ulikecam.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('jianying-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
                     <i class="fas fa-film"></i>
@@ -654,13 +655,13 @@
                 <h3 class="software-name">剪映专业版</h3>
                 <p class="software-desc">专业的视频剪辑软件</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('jianying-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('jianying-detail')">详情</button>
                 </div>
                 <div class="category-tag">其他</div>
             </div>
 
             <!-- UU加速器 -->
-            <div class="software-card" data-category="other" title="游戏加速必备工具" data-website="https://uu.163.com/">
+    <div class="software-card glass-ui" data-category="other" title="游戏加速必备工具" data-website="https://uu.163.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('uu-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
                     <i class="fas fa-tachometer-alt"></i>
@@ -668,13 +669,13 @@
                 <h3 class="software-name">UU加速器</h3>
                 <p class="software-desc">专业的游戏网络加速工具</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('uu-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('uu-detail')">详情</button>
                 </div>
                 <div class="category-tag">其他</div>
             </div>
 
             <!-- GitHub -->
-            <div class="software-card" data-category="editor" data-website="https://github.com/">
+    <div class="software-card glass-ui" data-category="editor" data-website="https://github.com/">
                 <i class="fas fa-info-circle info-icon" onclick="togglePopup('github-info')"></i>
                 <div class="icon" style="background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);">
                     <i class="fab fa-github"></i>
@@ -682,9 +683,49 @@
                 <h3 class="software-name">GitHub</h3>
                 <p class="software-desc">全球最大的代码托管平台</p>
                 <div class="button-group">
-                    <button class="detail-btn" onclick="togglePopup('github-detail')">详情</button>
+            <button class="detail-btn glass-ui" onclick="togglePopup('github-detail')">详情</button>
                 </div>
                 <div class="category-tag">编程</div>
+            </div>
+
+            <!-- trace.moe 动漫场景搜索引擎 -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://trace.moe">
+                <div class="icon" style="background: linear-gradient(135deg, #00cec9 0%, #0984e3 100%);">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="software-name">trace.moe</h3>
+                <p class="software-desc">动漫场景搜索：上传截图，识别番剧与时间点</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('tracemoe-detail')">详情</button>
+                </div>
+                <div class="category-tag">其他</div>
+            </div>
+
+            <!-- Bigjpg AI图片无损放大 -->
+    <div class="software-card glass-ui" data-category="tools" data-website="https://bigjpg.com/zh">
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Bigjpg</h3>
+                <p class="software-desc">AI图片无损放大（支持插画/照片多倍放大）</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('bigjpg-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- Bigjpg AI 图片无损放大 -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://bigjpg.com/zh">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('bigjpg-detail')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Bigjpg</h3>
+                <p class="software-desc">AI无损放大图片（卡通/照片，降噪与倍数）</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('bigjpg-detail')">详情</button>
+                </div>
+                <div class="category-tag">其他</div>
             </div>
         </div>
         
@@ -705,7 +746,7 @@
                 <a href="#" class="footer-link" onclick="togglePopup('disclaimer-info'); return false;">免责声明</a>
             </div>
             
-            <p>© 2025 软件与网站导航 | 高效工具集合</p>
+            <!-- 版权文字按需移除 -->
         </footer>
     </div>
     
@@ -714,7 +755,7 @@
       <div class="popup-content">
         <span class="popup-close" onclick="togglePopup('about-info')">&times;</span>
         <h3>关于本站</h3>
-        <p>本网站由 <b>蔡</b> 使用 Cursor 开发。<br>如有意见或建议，欢迎联系邮箱：<a href="mailto:liaozixing2007@outlook.com">liaozixing2007@outlook.com</a><br>或联系QQ：<span id="qq-number">2730114583</span> <button class="copy-btn" onclick="copyQQ(this)" title="复制QQ号"><i class="fas fa-copy"></i></button></p>
+        <p>本网站由 <a href="https://www.douyin.com/user/MS4wLjABAAAAiB-1t6AUFCmINDE5pHr7WKJnRolSav_1Tie3AH1ZJBg?from_tab_name=main" target="_blank" rel="noopener">蔡</a> 使用 Cursor&Trae混合 开发<br>资源来自网络精选收录<br>如有意见或建议，欢迎联系邮箱：<span id="email-address">liaozixing2007@outlook.com</span> <button class="copy-btn" onclick="copyEmail(this)" title="复制邮箱"><i class="fas fa-copy"></i></button><br>或联系QQ：<span id="qq-number">2730114583</span> <button class="copy-btn" onclick="copyQQ(this)" title="复制QQ号"><i class="fas fa-copy"></i></button></p>
       </div>
     </div>
     <!-- 免责声明弹窗 -->
@@ -1262,9 +1303,59 @@
         </ul>
       </div>
     </div>
+    <!-- trace.moe 详情 -->
+    <div id="tracemoe-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('tracemoe-detail')">&times;</span>
+        <h3>trace.moe 功能详情</h3>
+        <ul>
+          <li>上传动漫截图，识别番剧名称、集数、时间点与相似度。</li>
+          <li>返回片段预览视频与跳转链接，便于定位出处。</li>
+          <li>支持拖拽或粘贴图片，移动端同样可用。</li>
+          <li>提供 API，可用于自动化检索或集成到应用。</li>
+          <li>通常无需“科学上网”，若访问异常可尝试代理。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bigjpg 详情 -->
+    <div id="bigjpg-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('bigjpg-detail')">&times;</span>
+        <h3>Bigjpg 功能详情</h3>
+        <ul>
+          <li>AI 无损放大图片，支持卡通插画与照片两种风格 [0]。</li>
+          <li>降噪等级可选：无/低/中/高/最高（-1 至 3）[0]。</li>
+          <li>放大倍数：2x、4x、8x、16x（依套餐与大小限制）[0]。</li>
+          <li>免费版：每月 20 张，最大上传 5MB；高级版更高配额 [0]。</li>
+          <li>支持离线任务、批量放大与同时放大多张图片 [0]。</li>
+          <li>提供 API（创建任务、查询结果、重试任务），便于集成 [0]。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bigjpg 详情 -->
+    <div id="bigjpg-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('bigjpg-detail')">&times;</span>
+        <h3>Bigjpg 功能详情</h3>
+        <ul>
+          <li>基于深度卷积神经网络（CNN）的 AI 无损放大。</li>
+          <li>支持“插画/卡通”和“照片”两种风格，降噪可调。</li>
+          <li>最高可至 16x 放大，适合壁纸、打印等高分辨率需求。</li>
+          <li>提供任务式接口，支持批量与离线处理（付费方案可用）。</li>
+          <li>免费版每月有一定额度与大小限制，速度较慢。</li>
+        </ul>
+      </div>
+    </div>
+
     <!-- 回到顶部按钮 -->
-    <button id="back-to-top" title="回到顶部" style="display:none;position:fixed;right:30px;bottom:40px;z-index:2000;width:48px;height:48px;border:none;border-radius:50%;background:#3498db;color:#fff;font-size:2rem;box-shadow:0 4px 12px rgba(52,152,219,0.2);cursor:pointer;transition:background 0.3s;">
+    <button id="back-to-top" class="glass-ui" title="回到顶部" style="display:none;position:fixed;right:30px;bottom:92px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:2rem;cursor:pointer;">
       <i class="fas fa-arrow-up"></i>
+    </button>
+    <!-- 一键到底部按钮 -->
+    <button id="scroll-to-bottom" class="glass-ui" title="到底部" style="display:block;position:fixed;right:30px;bottom:40px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:2rem;cursor:pointer;">
+      <i class="fas fa-arrow-down"></i>
     </button>
     
 <script src="script.js" defer></script>

@@ -1,6 +1,21 @@
 // 弹出层控制
 function togglePopup(id) {
     const popup = document.getElementById(id);
+    if (!popup) return;
+
+    const isActive = popup.classList.contains('active');
+    const openPopups = document.querySelectorAll('.popup.active');
+
+    // 规则：只有关闭当前弹窗后才能打开其他弹窗
+    // 当已有其他弹窗处于打开状态，且当前操作是“打开另一个弹窗”，则直接阻止
+    if (!isActive && openPopups.length > 0) {
+        // 若点击的就是已打开的弹窗，则继续往下执行切换逻辑
+        const alreadyOpen = Array.from(openPopups).some(p => p.id === id);
+        if (!alreadyOpen) {
+            return;
+        }
+    }
+
     popup.classList.toggle('active');
     // 保持页面在弹窗打开时可滚动，不再锁定 body
 
