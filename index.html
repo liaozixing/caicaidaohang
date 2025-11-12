@@ -33,27 +33,15 @@
             <div class="header-top">
                 <div class="logo"></div>
                 <div class="theme-controls">
-                    <div class="theme-menu-wrapper">
-                        <div class="theme-toggle" id="theme-toggle" title="选择主题模式">
-                            <i class="fas fa-desktop" id="theme-icon"></i>
-                        </div>
-                        <div class="theme-dropdown" id="theme-dropdown">
-                            <div class="theme-option" data-theme="dark">
-                                <i class="fas fa-moon"></i>
-                                <span>夜间模式</span>
-                                <i class="fas fa-check check-icon"></i>
-                            </div>
-                            <div class="theme-option" data-theme="light">
-                                <i class="fas fa-sun"></i>
-                                <span>明亮模式</span>
-                                <i class="fas fa-check check-icon"></i>
-                            </div>
-                            <div class="theme-option active" data-theme="system">
-                                <i class="fas fa-desktop"></i>
-                                <span>跟随系统</span>
-                                <i class="fas fa-check check-icon"></i>
-                            </div>
-                        </div>
+                    <div class="system-follow" title="跟随系统主题（开启后自动随系统变化）">
+                        <label class="switch" aria-label="跟随系统">
+                            <input type="checkbox" id="follow-system-checkbox" checked>
+                            <span class="slider" aria-hidden="true"></span>
+                        </label>
+                        <span class="switch-text" id="follow-system-text">跟随系统</span>
+                    </div>
+                    <div class="theme-toggle" id="theme-toggle" title="手动切换暗/亮主题（点击将关闭系统跟随）">
+                        <i class="fas fa-sun" id="theme-icon"></i>
                     </div>
                 </div>
             </div>
@@ -1335,21 +1323,12 @@
         <span class="popup-close" onclick="togglePopup('ibispaintx-detail')">&times;</span>
         <h3>爱笔思画X (Ibispaint X) 功能详情</h3>
         <ul>
-          <li><strong>专业绘画功能：</strong>提供超过100种画笔工具，包括水彩、油画、铅笔、马克笔等，支持自定义画笔参数和纹理。</li>
-          <li><strong>图层系统：</strong>支持无限图层，提供图层混合模式、蒙版、剪贴蒙版等专业功能，满足复杂创作需求。</li>
-          <li><strong>滤镜与特效：</strong>内置丰富的滤镜效果，包括模糊、锐化、色调调整、艺术滤镜等，可实时预览效果。</li>
-          <li><strong>动画功能：</strong>支持逐帧动画制作，可导出为GIF或视频格式，适合制作动态插画和表情包。</li>
-          <li><strong>3D功能：</strong>提供3D模型导入和绘制功能，可在3D模型上直接绘画，实现立体效果。</li>
-          <li><strong>适用平台：</strong>Android、iOS、Windows、macOS</li>
-          <li><strong>系统要求：</strong>
-            <ul>
-              <li>Android: Android 5.0 或更高版本，建议 2GB RAM 以上</li>
-              <li>iOS: iOS 11.0 或更高版本，支持 iPhone 和 iPad</li>
-              <li>Windows: Windows 10 或更高版本</li>
-              <li>macOS: macOS 10.13 或更高版本</li>
-            </ul>
-          </li>
-          <li><strong>特色功能：</strong>支持压感笔（Apple Pencil、S Pen等），提供平滑的绘画体验；支持云同步，可在多设备间无缝切换创作。</li>
+          <li><strong>专业绘画功能：</strong>100+画笔工具（水彩、油画、铅笔等），支持自定义参数和纹理。</li>
+          <li><strong>图层系统：</strong>无限图层+混合模式+蒙版，满足复杂创作。</li>
+          <li><strong>滤镜与动画：</strong>丰富滤镜效果+逐帧动画（支持GIF/视频导出）。</li>
+          <li><strong>3D功能：</strong>可在导入的3D模型上直接绘画。</li>
+          <li><strong>跨平台：</strong>支持Android、iOS、Windows、macOS。</li>
+          <li><strong>特色：</strong>压感笔支持（Apple Pencil/S Pen）+ 云同步。</li>
         </ul>
       </div>
     </div>

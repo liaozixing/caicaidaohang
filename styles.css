@@ -109,9 +109,6 @@ body {
     color: #f1c40f;
 }
 
-.theme-toggle .fa-desktop {
-    color: var(--accent-color);
-}
 
 [data-theme="dark"] .theme-toggle {
     background: var(--bg-secondary);
@@ -122,75 +119,77 @@ body {
     background: rgba(60, 60, 80, 0.9);
 }
 
-/* 主题菜单下拉样式 */
-.theme-menu-wrapper {
-    position: relative;
+[data-theme="dark"] .system-follow {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
 }
 
-.theme-dropdown {
+/* 跟随系统开关样式 */
+.system-follow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px; /* 与按钮统一圆角 */
+    padding: 8px; /* 内边距 8px */
+    min-width: 120px; /* 统一按钮尺寸 */
+    min-height: 40px;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed) ease;
+}
+
+.system-follow:hover {
+    box-shadow: var(--card-shadow-hover);
+}
+
+.switch {
+    position: relative;
+    width: 42px;
+    height: 24px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
     position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
+    inset: 0;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    min-width: 160px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 1000;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    transition: all var(--transition-speed) ease;
 }
 
-.theme-dropdown.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.theme-option {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: var(--text-primary);
-    position: relative;
-}
-
-.theme-option:hover {
-    background: var(--bg-secondary);
-}
-
-.theme-option.active {
-    background: rgba(52, 152, 219, 0.1);
-}
-
-.theme-option i:first-child {
+.slider::before {
+    content: "";
+    position: absolute;
     width: 18px;
-    text-align: center;
-    color: var(--accent-color);
+    height: 18px;
+    top: 2px;
+    left: 3px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform var(--transition-speed) ease, background var(--transition-speed) ease;
 }
 
-.theme-option span {
-    flex: 1;
-    font-size: 14px;
-    font-weight: 500;
+.switch input:checked + .slider {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #2980b9 100%);
+    border-color: transparent;
 }
 
-.theme-option .check-icon {
-    display: none;
-    color: var(--accent-color);
-    font-size: 14px;
+.switch input:checked + .slider::before {
+    transform: translateX(18px);
+    background: #fff;
 }
 
-.theme-option.active .check-icon {
-    display: inline-block;
+.switch-text {
+    font-size: 16px; /* 字号 16px */
+    line-height: 1.5; /* 行高 1.5 */
+    color: var(--text-primary);
+    user-select: none;
 }
 
 /* Logo 火箭图标容器与尺寸 */
@@ -891,19 +890,19 @@ footer {
 }
 
 .popup-content {
-    /* 默认毛玻璃（明亮模式） */
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px) saturate(1.1);
-    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    /* 统一透明模糊效果 */
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px) saturate(1.2);
+    -webkit-backdrop-filter: blur(15px) saturate(1.2);
     padding: 30px;
     border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     max-width: 600px;
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     pointer-events: auto; /* 保持弹窗内容可交互 */
 }
 
@@ -912,7 +911,7 @@ footer {
     top: 15px;
     right: 15px;
     font-size: 1.5rem;
-    color: #333333;
+    color: #000;
     cursor: pointer;
     transition: all 0.3s ease;
     background: rgba(255,255,255,0.85);
@@ -935,6 +934,17 @@ footer {
     box-shadow: 0 1px 4px rgba(0,0,0,0.18);
 }
 
+[data-theme="dark"] .popup-close {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .popup-close:hover {
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+}
+
 .popup h3 {
     color: #ffffff;
     margin-bottom: 20px;
@@ -954,7 +964,7 @@ footer {
 .mobile-view {
     margin-top: 20px;
     padding-top: 15px;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .mobile-actions {
@@ -985,21 +995,23 @@ footer {
     box-shadow: 0 6px 15px rgba(52, 152, 219, 0.45);
 }
 
-/* 官网访问链接：黑色文字，保持大小与字重，提升可读性 */
+/* 官网访问链接：统一透明模糊背景 */
 .official-website-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 10px 16px;
-    background: #ffffff;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: inherit;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: 600;
     transition: box-shadow 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     text-decoration: none;
 }
 
@@ -1014,9 +1026,11 @@ footer {
     margin-top: 16px;
     padding: 14px;
     border-radius: 12px;
-    background: var(--bg-secondary);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     text-align: center;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     overflow: hidden;
     max-height: 0;
     opacity: 0;
@@ -1067,8 +1081,11 @@ footer {
 
 .popup-content.liquid-glass {
     isolation: isolate;
-    background: transparent; /* 由伪元素提供毛玻璃与涂层 */
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.1); /* 增强透明度 */
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.2); /* 降低边框透明度 */
+    color: #333; /* 明亮模式下使用灰色文字 */
 }
 
 .popup-content.liquid-glass::before {
@@ -1095,11 +1112,23 @@ footer {
     pointer-events: none;
 }
 
-/* 深色主题适配：轻微调整涂层与阴影 */
-[data-theme="dark"] .popup-content.liquid-glass::before {
-    background-color: rgba(40, 40, 40, 0.25);
-    box-shadow: inset var(--shadow-offset) var(--shadow-offset) var(--shadow-blur) var(--shadow-spread) rgba(255,255,255,0.5);
+/* 深色主题适配：白色透明毛玻璃 */
+[data-theme="dark"] .popup-content.liquid-glass {
+    background: rgba(255, 255, 255, 0.05); /* 进一步增强深色模式透明度 */
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.15); /* 降低深色模式边框透明度 */
+    color: #fff; /* 深色模式下白色文字 */
 }
+
+[data-theme="dark"] .popup-content.liquid-glass::before {
+    background-color: transparent;
+    box-shadow: inset var(--shadow-offset) var(--shadow-offset) var(--shadow-blur) var(--shadow-spread) rgba(255,255,255,0.3);
+}
+
+
+
+
 
 /* —— 统一的液态玻璃按钮/标签样式 —— */
 .glass-ui {
@@ -1141,6 +1170,13 @@ footer {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.18);
 }
 
+/* 修复深色模式下选项卡点击效果 */
+[data-theme="dark"] .tab.active, [data-theme="dark"] .tab:hover {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #2980b9 100%);
+    color: white;
+    border-color: transparent;
+}
+
 /* 兼容性与优雅降级：不支持 backdrop-filter 时提升不透明度以增强可读性 */
 @supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
     .glass-ui {
@@ -1159,8 +1195,15 @@ footer {
     box-shadow: 0 3px 8px rgba(52, 152, 219, 0.25);
 }
 
+[data-theme="dark"] .qr-container {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
 [data-theme="dark"] .qr-container img {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* 复制按钮样式 */
@@ -1208,11 +1251,11 @@ footer {
 
 /* 暗色主题下的弹窗样式 */
 [data-theme="dark"] .popup-content {
-    /* 毛玻璃（暗色模式） */
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px) saturate(1.1);
-    -webkit-backdrop-filter: blur(10px) saturate(1.1);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    /* 统一透明模糊效果（暗色模式） */
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px) saturate(1.2);
+    -webkit-backdrop-filter: blur(15px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--text-primary);
 }
 
@@ -1232,10 +1275,12 @@ footer {
 /* 按钮与链接的文字颜色统一交由 .glass-ui 控制：
    明亮主题纯黑(#000)，暗色主题纯白(#fff)，避免弹窗内重复覆盖造成冲突 */
 
-/* 深色模式下为官网链接提供更深的背景以保证对比度 */
+/* 深色模式下统一透明模糊背景 */
 [data-theme="dark"] .official-website-btn {
-    background: var(--card-bg);
-    border-color: var(--border-color);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .popup ul {
@@ -1392,7 +1437,9 @@ footer {
 }
 
 /* 无障碍：焦点可见性增强，满足 WCAG 2.1 AA */
-.theme-toggle:focus-visible {
+.theme-toggle:focus-visible,
+.system-follow:focus-visible,
+.switch .slider:focus-visible {
     outline: 3px solid #2980b9;
     outline-offset: 2px;
 }

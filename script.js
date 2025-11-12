@@ -17,35 +17,32 @@ function scrollTabs(direction) {
 function initThemeControls() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    const themeDropdown = document.getElementById('theme-dropdown');
-    const themeOptions = document.querySelectorAll('.theme-option');
+    const followSystemCheckbox = document.getElementById('follow-system-checkbox');
     const htmlEl = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // 偏好：默认跟随系统
-    let currentMode = 'system'; // 'system' | 'dark' | 'light'
+    // 偏好：默认跟随系统，手动偏好默认暗色
+    let followSystem = true;
+    let manualTheme = 'dark';
     try {
-        currentMode = localStorage.getItem('themeMode') || 'system';
+        followSystem = JSON.parse(localStorage.getItem('followSystem') || 'true');
+        manualTheme = localStorage.getItem('theme') || 'dark';
     } catch (e) {}
 
-    function updateIcon(theme, mode) {
+    function updateIcon(theme) {
         if (!themeIcon) return;
-        // 清除所有图标类
-        themeIcon.classList.remove('fa-sun', 'fa-moon', 'fa-desktop');
-        
-        if (mode === 'system') {
-            // 跟随系统模式，显示桌面图标
-            themeIcon.classList.add('fa-desktop');
-        } else if (theme === 'dark') {
+        if (theme === 'dark') {
+            themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
         } else {
+            themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
         }
     }
 
     function applyTheme(theme) {
         htmlEl.setAttribute('data-theme', theme);
-        updateIcon(theme, currentMode);
+        updateIcon(theme);
     }
 
     function syncWithSystem() {
@@ -53,75 +50,61 @@ function initThemeControls() {
         applyTheme(theme);
     }
 
-    function updateActiveOption(mode) {
-        themeOptions.forEach(option => {
-            option.classList.remove('active');
-            const checkIcon = option.querySelector('.check-icon');
-            if (checkIcon) checkIcon.style.display = 'none';
-        });
-        
-        const activeOption = document.querySelector(`.theme-option[data-theme="${mode}"]`);
-        if (activeOption) {
-            activeOption.classList.add('active');
-            const checkIcon = activeOption.querySelector('.check-icon');
-            if (checkIcon) checkIcon.style.display = 'inline-block';
-        }
+    // 初始化复选框与主题
+    if (followSystemCheckbox) {
+        followSystemCheckbox.checked = !!followSystem;
     }
-
-    // 初始化主题
-    if (currentMode === 'system') {
+    if (followSystem) {
         syncWithSystem();
-        updateActiveOption('system');
     } else {
-        applyTheme(currentMode);
-        updateActiveOption(currentMode);
+        applyTheme(manualTheme);
     }
 
-    // 点击按钮显示/隐藏下拉菜单
-    if (themeToggle && themeDropdown) {
-        themeToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            themeDropdown.classList.toggle('show');
-        });
-
-        // 点击外部关闭菜单
-        document.addEventListener('click', (e) => {
-            if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
-                themeDropdown.classList.remove('show');
-            }
-        });
-    }
-
-    // 点击选项切换主题
-    themeOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            const mode = option.getAttribute('data-theme');
-            currentMode = mode;
-            localStorage.setItem('themeMode', mode);
-
-            if (mode === 'system') {
+    // 跟随系统开关变化
+    if (followSystemCheckbox) {
+        followSystemCheckbox.addEventListener('change', (e) => {
+            followSystem = e.target.checked;
+            localStorage.setItem('followSystem', JSON.stringify(followSystem));
+            if (followSystem) {
                 syncWithSystem();
             } else {
-                applyTheme(mode);
+                applyTheme(manualTheme);
             }
-
-            updateActiveOption(mode);
-            themeDropdown.classList.remove('show');
         });
-    });
+    }
 
-    // 监听系统主题变化（仅在跟随系统模式下）
+    // 监听系统主题变化
     if (mediaQuery.addEventListener) {
         mediaQuery.addEventListener('change', (e) => {
-            if (currentMode === 'system') {
-                applyTheme(e.matches ? 'dark' : 'light');
-            }
+            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
         });
     } else if (mediaQuery.addListener) {
         mediaQuery.addListener((e) => {
-            if (currentMode === 'system') {
-                applyTheme(e.matches ? 'dark' : 'light');
+            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
+        });
+    }
+
+    // 手动切换按钮
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // 若当前开启跟随系统，点击手动切换将关闭跟随系统
+            if (followSystem) {
+                followSystem = false;
+                localStorage.setItem('followSystem', 'false');
+                if (followSystemCheckbox) followSystemCheckbox.checked = false;
             }
+
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            manualTheme = newTheme;
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // 切换动画效果
+            themeToggle.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1)';
+            }, 150);
         });
     }
 }
