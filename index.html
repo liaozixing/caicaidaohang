@@ -33,62 +33,29 @@
             <div class="header-top">
                 <div class="logo"></div>
                 <div class="theme-controls">
-                    <div class="theme-toggle" id="theme-toggle" title="手动切换暗/亮主题（点击将关闭系统跟随）">
-                        <i class="fas fa-sun" id="theme-icon"></i>
-                    </div>
-                    <div class="system-follow" title="跟随系统主题（开启后自动随系统变化）">
-                        <label class="switch" aria-label="跟随系统">
-                            <input type="checkbox" id="follow-system-checkbox" checked>
-                            <span class="slider" aria-hidden="true"></span>
-                        </label>
-                        <span class="switch-text" id="follow-system-text">跟随系统</span>
+                    <div class="theme-menu-wrapper">
+                        <div class="theme-toggle" id="theme-toggle" title="选择主题模式">
+                            <i class="fas fa-desktop" id="theme-icon"></i>
+                        </div>
+                        <div class="theme-dropdown" id="theme-dropdown">
+                            <div class="theme-option" data-theme="dark">
+                                <i class="fas fa-moon"></i>
+                                <span>夜间模式</span>
+                                <i class="fas fa-check check-icon"></i>
+                            </div>
+                            <div class="theme-option" data-theme="light">
+                                <i class="fas fa-sun"></i>
+                                <span>明亮模式</span>
+                                <i class="fas fa-check check-icon"></i>
+                            </div>
+                            <div class="theme-option active" data-theme="system">
+                                <i class="fas fa-desktop"></i>
+                                <span>跟随系统</span>
+                                <i class="fas fa-check check-icon"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Rocket Stage: 位于顶部导航与主内容之间的白色空白区域中央 -->
-            <div class="rocket-stage" aria-label="火箭动画舞台">
-    <div class="rocket-wrap" id="rocket-wrap" tabindex="0" role="button" aria-pressed="false" aria-description="点击触发启动动画，按钮可切换循环喷射">
-                    <!-- 粒子画布（在火焰下方） -->
-                    <canvas id="rocket-particles" class="rocket-particles" width="320" height="180" aria-hidden="true"></canvas>
-                    <!-- 火箭 SVG：SVG+CSS 动画实现主体视觉 -->
-                    <svg id="rocket-svg" class="rocket-svg state-idle" width="160" height="160" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="火箭">
-                        <!-- 火箭主体 -->
-                        <defs>
-                            <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="#ffffff"/>
-                                <stop offset="100%" stop-color="#dfe6e9"/>
-                            </linearGradient>
-                            <radialGradient id="windowGrad" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#74b9ff"/>
-                                <stop offset="100%" stop-color="#0984e3"/>
-                            </radialGradient>
-                            <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#fff200"/>
-                                <stop offset="50%" stop-color="#ff7f11"/>
-                                <stop offset="100%" stop-color="#c0392b"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- 机身 -->
-                        <g class="rocket-body" transform="translate(50,45)">
-                            <path d="M0,-40 C15,-25 18,-5 18,10 C18,20 10,30 0,35 C-10,30 -18,20 -18,10 C-18,-5 -15,-25 0,-40 Z" fill="url(#bodyGrad)" stroke="#b2bec3" stroke-width="1.5"/>
-                            <circle cx="0" cy="-15" r="7" fill="url(#windowGrad)" stroke="#2d3436" stroke-width="1"/>
-                        </g>
-                        <!-- 尾翼（可动式，喷射时展开） -->
-                        <g class="rocket-fins" transform="translate(50,60)">
-                            <path class="fin fin-left" d="M-18,0 L-32,10 L-18,8 Z" fill="#b2bec3"/>
-                            <path class="fin fin-right" d="M18,0 L32,10 L18,8 Z" fill="#b2bec3"/>
-                        </g>
-                        <!-- 火焰（多层渐变） -->
-                        <g class="rocket-flame" transform="translate(50,68)">
-                            <path class="flame-layer layer-1" d="M0,0 C8,10 6,22 0,30 C-6,22 -8,10 0,0 Z" fill="url(#flameGrad)"/>
-                            <path class="flame-layer layer-2" d="M0,2 C6,12 5,22 0,28 C-5,22 -6,12 0,2 Z" fill="url(#flameGrad)" opacity="0.85"/>
-                            <path class="flame-layer layer-3" d="M0,4 C5,12 4,20 0,24 C-4,20 -5,12 0,4 Z" fill="url(#flameGrad)" opacity="0.7"/>
-                            <!-- 静止状态蓝色光晕 -->
-                            <ellipse class="flame-glow" cx="0" cy="10" rx="9" ry="6" fill="#74b9ff" opacity="0.6"/>
-                        </g>
-                    </svg>
-                </div>
-                <div class="rocket-controls" role="group" aria-label="火箭动画控制"></div>
             </div>
             <h1>蔡蔡导航</h1>
             <p class="subtitle">精选高效实用工具与优质网站，一站式访问官方网站与资源</p>
@@ -115,10 +82,9 @@
         <div class="tab glass-ui" data-category="design">设计创意</div>
 <div class="tab glass-ui" data-category="ai">AI平台</div>
 <div class="tab glass-ui" data-category="editor">编程</div>
-<div class="tab glass-ui" data-category="other">其他</div>
+<div class="tab glass-ui" data-category="other">软件资源</div>
 <div class="tab glass-ui" data-category="self">自研</div>
             </div>
-            
         </div>
         
         <h2 class="category-title">精选软件推荐</h2>
@@ -643,7 +609,7 @@
                 <div class="button-group">
             <button class="detail-btn glass-ui" onclick="togglePopup('qishui-detail')">详情</button>
                 </div>
-                <div class="category-tag">其他</div>
+                <div class="category-tag">软件资源</div>
             </div>
 
             <!-- 剪映专业版 -->
@@ -657,7 +623,7 @@
                 <div class="button-group">
             <button class="detail-btn glass-ui" onclick="togglePopup('jianying-detail')">详情</button>
                 </div>
-                <div class="category-tag">其他</div>
+                <div class="category-tag">软件资源</div>
             </div>
 
             <!-- UU加速器 -->
@@ -671,7 +637,7 @@
                 <div class="button-group">
             <button class="detail-btn glass-ui" onclick="togglePopup('uu-detail')">详情</button>
                 </div>
-                <div class="category-tag">其他</div>
+                <div class="category-tag">软件资源</div>
             </div>
 
             <!-- GitHub -->
@@ -698,7 +664,7 @@
                 <div class="button-group">
             <button class="detail-btn glass-ui" onclick="togglePopup('tracemoe-detail')">详情</button>
                 </div>
-                <div class="category-tag">其他</div>
+                <div class="category-tag">软件资源</div>
             </div>
 
             <!-- Bigjpg AI图片无损放大 -->
@@ -725,7 +691,21 @@
                 <div class="button-group">
             <button class="detail-btn glass-ui" onclick="togglePopup('bigjpg-detail')">详情</button>
                 </div>
-                <div class="category-tag">其他</div>
+                <div class="category-tag">软件资源</div>
+            </div>
+
+            <!-- 爱笔思画X -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://www.123865.com/s/FKZAjv-5wvud?pwd=6666#">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('ibispaintx-detail')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3 class="software-name">爱笔思画X (Ibispaint X)</h3>
+                <p class="software-desc">专业级移动端绘画应用，功能强大的数字艺术创作工具</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('ibispaintx-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
             </div>
         </div>
         
@@ -1341,10 +1321,35 @@
         <h3>Bigjpg 功能详情</h3>
         <ul>
           <li>基于深度卷积神经网络（CNN）的 AI 无损放大。</li>
-          <li>支持“插画/卡通”和“照片”两种风格，降噪可调。</li>
+          <li>支持"插画/卡通"和"照片"两种风格，降噪可调。</li>
           <li>最高可至 16x 放大，适合壁纸、打印等高分辨率需求。</li>
           <li>提供任务式接口，支持批量与离线处理（付费方案可用）。</li>
           <li>免费版每月有一定额度与大小限制，速度较慢。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 爱笔思画X 详情 -->
+    <div id="ibispaintx-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('ibispaintx-detail')">&times;</span>
+        <h3>爱笔思画X (Ibispaint X) 功能详情</h3>
+        <ul>
+          <li><strong>专业绘画功能：</strong>提供超过100种画笔工具，包括水彩、油画、铅笔、马克笔等，支持自定义画笔参数和纹理。</li>
+          <li><strong>图层系统：</strong>支持无限图层，提供图层混合模式、蒙版、剪贴蒙版等专业功能，满足复杂创作需求。</li>
+          <li><strong>滤镜与特效：</strong>内置丰富的滤镜效果，包括模糊、锐化、色调调整、艺术滤镜等，可实时预览效果。</li>
+          <li><strong>动画功能：</strong>支持逐帧动画制作，可导出为GIF或视频格式，适合制作动态插画和表情包。</li>
+          <li><strong>3D功能：</strong>提供3D模型导入和绘制功能，可在3D模型上直接绘画，实现立体效果。</li>
+          <li><strong>适用平台：</strong>Android、iOS、Windows、macOS</li>
+          <li><strong>系统要求：</strong>
+            <ul>
+              <li>Android: Android 5.0 或更高版本，建议 2GB RAM 以上</li>
+              <li>iOS: iOS 11.0 或更高版本，支持 iPhone 和 iPad</li>
+              <li>Windows: Windows 10 或更高版本</li>
+              <li>macOS: macOS 10.13 或更高版本</li>
+            </ul>
+          </li>
+          <li><strong>特色功能：</strong>支持压感笔（Apple Pencil、S Pen等），提供平滑的绘画体验；支持云同步，可在多设备间无缝切换创作。</li>
         </ul>
       </div>
     </div>

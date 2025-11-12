@@ -79,9 +79,9 @@ function initDetailMobileView() {
     wrapper.innerHTML = `
       <div class="mobile-actions">
         <button class="mobile-view-btn" type="button"><i class="fas fa-qrcode"></i> 展开/收起二维码</button>
-        <a class="official-website-btn" href="#" target="_blank" rel="noopener">访问官网</a>
+        <a class="official-website-btn" href="#" target="_blank" rel="noopener">获取资源</a>
       </div>
-      <div class="qr-container"><img alt="二维码" /><p class="qr-hint">扫描二维码在手机打开官网</p></div>
+      <div class="qr-container"><img alt="二维码" /><p class="qr-hint">扫描二维码在手机上获取资源</p></div>
     `;
     content.appendChild(wrapper);
 
