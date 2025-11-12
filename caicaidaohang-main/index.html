@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔡蔡导航</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+    <script>
+        // 预设主题，避免首次渲染闪烁
+        (function() {
+            try {
+                var followSystem = JSON.parse(localStorage.getItem('followSystem') || 'true');
+                var manualTheme = localStorage.getItem('theme') || 'dark';
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var theme = followSystem ? (prefersDark ? 'dark' : 'light') : manualTheme;
+                // 设置到 html 元素，确保 CSS 变量立即生效
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div class="logo"></div>
+                <div class="theme-controls">
+                    <div class="theme-menu-wrapper">
+                        <div class="theme-toggle" id="theme-toggle" title="选择主题模式">
+                            <i class="fas fa-desktop" id="theme-icon"></i>
+                        </div>
+                        <div class="theme-dropdown" id="theme-dropdown">
+                            <div class="theme-option" data-theme="dark">
+                                <i class="fas fa-moon"></i>
+                                <span>夜间模式</span>
+                                <i class="fas fa-check check-icon"></i>
+                            </div>
+                            <div class="theme-option" data-theme="light">
+                                <i class="fas fa-sun"></i>
+                                <span>明亮模式</span>
+                                <i class="fas fa-check check-icon"></i>
+                            </div>
+                            <div class="theme-option active" data-theme="system">
+                                <i class="fas fa-desktop"></i>
+                                <span>跟随系统</span>
+                                <i class="fas fa-check check-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1>蔡蔡导航</h1>
+            <p class="subtitle">精选高效实用工具与优质网站，一站式访问官方网站与资源</p>
+            
+            <div class="search-container">
+                <div class="search-box-wrapper">
+                    <input type="text" class="search-box" placeholder="搜索软件或工具...">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="category-tabs-container">
+            
+            <div class="category-tabs">
+                <div class="tab active" data-category="all">全部软件</div>
+        <div class="tab glass-ui" data-category="security">安全防护</div>
+        <div class="tab glass-ui" data-category="tools">实用工具</div>
+        <div class="tab glass-ui" data-category="multimedia">多媒体</div>
+        <div class="tab glass-ui" data-category="social">社交办公</div>
+        <div class="tab glass-ui" data-category="gaming">游戏平台</div>
+        <div class="tab glass-ui" data-category="design">设计创意</div>
+<div class="tab glass-ui" data-category="ai">AI平台</div>
+<div class="tab glass-ui" data-category="editor">编程</div>
+<div class="tab glass-ui" data-category="other">软件资源</div>
+<div class="tab glass-ui" data-category="self">自研</div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">精选软件推荐</h2>
+        
+        <div class="software-grid">
+            <!-- VS Code -->
+    <div class="software-card glass-ui" data-category="editor" data-website="https://code.visualstudio.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('vscode-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #007ACC 0%, #005999 100%);">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="software-name">Visual Studio Code</h3>
+                <p class="software-desc">轻量级强大的代码编辑器</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('vscode-detail')">详情</button>
+                </div>
+                <div class="category-tag">编辑器</div>
+            </div>
+
+            <!-- PyCharm -->
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.jetbrains.com/pycharm/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('pycharm-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #21D789 0%, #1A9F6B 100%);">
+                    <i class="fab fa-python"></i>
+                </div>
+                <h3 class="software-name">PyCharm</h3>
+                <p class="software-desc">专业的Python IDE</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('pycharm-detail')">详情</button>
+                </div>
+                <div class="category-tag">编辑器</div>
+            </div>
+
+            <!-- WebStorm -->
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.jetbrains.com/webstorm/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('webstorm-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);">
+                    <i class="fab fa-js"></i>
+                </div>
+                <h3 class="software-name">WebStorm</h3>
+                <p class="software-desc">智能的JavaScript IDE</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('webstorm-detail')">详情</button>
+                </div>
+                <div class="category-tag">编辑器</div>
+            </div>
+
+            <!-- IntelliJ IDEA -->
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.jetbrains.com/idea/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('intellij-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #000000 0%, #333333 100%);">
+                    <i class="fas fa-coffee"></i>
+                </div>
+                <h3 class="software-name">IntelliJ IDEA</h3>
+                <p class="software-desc">强大的Java IDE</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('intellij-detail')">详情</button>
+                </div>
+                <div class="category-tag">编辑器</div>
+            </div>
+
+            <!-- Sublime Text -->
+    <div class="software-card glass-ui" data-category="editor" data-website="https://www.sublimetext.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('sublime-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);">
+                    <i class="fas fa-file-code"></i>
+                </div>
+                <h3 class="software-name">Sublime Text</h3>
+                <p class="software-desc">轻量级文本编辑器</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('sublime-detail')">详情</button>
+                </div>
+                <div class="category-tag">编辑器</div>
+            </div>
+
+            <!-- 火绒安全 -->
+    <div class="software-card glass-ui" data-category="security" data-website="https://www.huorong.cn/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('huorong-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="software-name">火绒安全</h3>
+                <p class="software-desc">轻量级安全防护软件，专注终端安全</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('huorong-detail')">详情</button>
+                </div>
+                <div class="category-tag">安全</div>
+            </div>
+            
+            <!-- WeGame -->
+    <div class="software-card glass-ui" data-category="gaming" data-website="https://www.wegame.com.cn/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('wegame-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #fbc531 0%, #e1b12c 100%);">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="software-name">WeGame</h3>
+                <p class="software-desc">腾讯官方游戏平台，提供游戏下载与管理</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('wegame-detail')">详情</button>
+                </div>
+                <div class="category-tag">游戏</div>
+            </div>
+
+            <!-- Steam -->
+    <div class="software-card glass-ui" data-category="gaming" title="访问Steam需要加速器" data-website="https://store.steampowered.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('steam-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #171a21 0%, #2a475e 100%);">
+                    <i class="fab fa-steam"></i>
+                </div>
+                <h3 class="software-name">Steam</h3>
+                <p class="software-desc">全球最大的数字游戏发行平台</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('steam-detail')">详情</button>
+                </div>
+                <div class="category-tag">游戏</div>
+            </div>
+            
+            <!-- Office Tool -->
+    <div class="software-card glass-ui" data-category="tools" data-website="https://otp.landian.vip/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('office-tool-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #1dd1a1 0%, #10ac84 100%);">
+                    <i class="fas fa-wrench"></i>
+                </div>
+                <h3 class="software-name">Office Tool</h3>
+                <p class="software-desc">强大的Office部署管理工具</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('office-tool-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+            
+            <!-- 图吧工具箱 -->
+    <div class="software-card glass-ui" data-category="tools" data-website="http://www.tbtool.cn/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('tbtool-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #54a0ff 0%, #2e86de 100%);">
+                    <i class="fas fa-toolbox"></i>
+                </div>
+                <h3 class="software-name">图吧工具箱</h3>
+                <p class="software-desc">硬件检测与系统维护工具集合</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('tbtool-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+            
+            <!-- Bandizip -->
+    <div class="software-card glass-ui" data-category="tools" data-website="https://www.bandisoft.com/bandizip/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('bandizip-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #feca57 0%, #ff9f43 100%);">
+                    <i class="fas fa-file-archive"></i>
+                </div>
+                <h3 class="software-name">Bandizip</h3>
+                <p class="software-desc">高效轻量的压缩解压工具</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('bandizip-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+            
+            <!-- PotPlayer -->
+    <div class="software-card glass-ui" data-category="multimedia" data-website="https://potplayer.daum.net/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('potplayer-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #5f27cd 0%, #341f97 100%);">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h3 class="software-name">PotPlayer</h3>
+                <p class="software-desc">功能强大的多媒体播放器</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('potplayer-detail')">详情</button>
+                </div>
+                <div class="category-tag">多媒体</div>
+            </div>
+            
+            <!-- HiBitUninstaller -->
+    <div class="software-card glass-ui" data-category="tools" data-website="https://hibitsoft.ir/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('hibit-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <h3 class="software-name">HiBitUninstaller</h3>
+                <p class="software-desc">强大的软件卸载清理工具</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('hibit-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- 软仓 RuanCang -->
+            <!-- 官方链接占位符: ${__web_page_ruancang__} -->
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.ruancang.net/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('ruancang-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3 class="software-name">软仓 (RuanCang)</h3>
+                <p class="software-desc">软件资源导航网站，提供设计/三维/后期/电子/办公等资源</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('ruancang-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+
+            <!-- Convertio -->
+            <!-- 官方链接占位符: ${__web_page_convertio__} -->
+    <div class="software-card glass-ui" data-category="tools" data-website="https://convertio.co/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('convertio-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3 class="software-name">Convertio</h3>
+                <p class="software-desc">在线格式转换平台，支持300+格式和多来源上传</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('convertio-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- Photopea -->
+            <!-- 官方链接占位符: ${__web_page_photopea__} -->
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.photopea.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('photopea-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Photopea</h3>
+                <p class="software-desc">在线图像编辑器，支持PSD等专业格式与PS快捷键</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('photopea-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+
+            <!-- Hotkey Cheatsheet -->
+            <!-- 官方链接占位符: ${__web_page_hotkey__} -->
+    <div class="software-card glass-ui" data-category="tools" data-website="https://hotkeycheatsheet.com/zh">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('hotkey-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <h3 class="software-name">Hotkey Cheatsheet</h3>
+                <p class="software-desc">专业软件快捷键查询，虚拟键盘显示，Windows/Mac切换</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('hotkey-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+            
+            <!-- 微信 -->
+    <div class="software-card glass-ui" data-category="social" data-website="https://weixin.qq.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('wechat-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #0be881 0%, #05c46b 100%);">
+                    <i class="fab fa-weixin"></i>
+                </div>
+                <h3 class="software-name">微信</h3>
+                <p class="software-desc">跨平台通讯社交应用</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('wechat-detail')">详情</button>
+                </div>
+                <div class="category-tag">社交</div>
+            </div>
+            
+            <!-- QQ -->
+    <div class="software-card glass-ui" data-category="social" data-website="https://im.qq.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('qq-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #1a5276 100%);">
+                    <i class="fab fa-qq"></i>
+                </div>
+                <h3 class="software-name">QQ</h3>
+                <p class="software-desc">腾讯即时通讯软件</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('qq-detail')">详情</button>
+                </div>
+                <div class="category-tag">社交</div>
+            </div>
+            
+            <!-- Adobe Creative Cloud -->
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.adobe.com/cn/creativecloud/roc/business.html">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('adobe-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #5dade2 0%, #2874a6 100%);">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="software-name">Adobe Creative Cloud</h3>
+                <p class="software-desc">创意设计软件套装</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('adobe-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+
+            <!-- LookAE -->
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.lookae.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('lookae-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3 class="software-name">LookAE</h3>
+                <p class="software-desc">专业AE模板与插件资源站，海量中文教程</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('lookae-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+
+            <!-- Motion Array -->
+    <div class="software-card glass-ui" data-category="design" data-website="https://motionarray.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('motionarray-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h3 class="software-name">Motion Array</h3>
+                <p class="software-desc">高质量视频模板、音效与素材一站式下载</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('motionarray-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+
+            <!-- 新CG儿 -->
+    <div class="software-card glass-ui" data-category="design" data-website="https://www.newcger.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('newcger-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00cec9 0%, #00b894 100%);">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="software-name">新CG儿</h3>
+                <p class="software-desc">数字视觉分享平台，免费AE模板与视频素材</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('newcger-detail')">详情</button>
+                </div>
+                <div class="category-tag">设计</div>
+            </div>
+            
+            <!-- DeepSeek -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://chat.deepseek.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('deepseek-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="software-name">DeepSeek</h3>
+                <p class="software-desc">强大的AI对话与创作平台</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('deepseek-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 豆包AI -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://www.doubao.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('doubao-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="software-name">豆包AI</h3>
+                <p class="software-desc">字节跳动推出的AI助手平台</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('doubao-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 腾讯元宝 -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://yuanbao.tencent.com/app/list">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('yuanbao-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="software-name">腾讯元宝</h3>
+                <p class="software-desc">腾讯推出的AI创作与对话平台</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('yuanbao-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 秘塔AI搜索 -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://metaso.cn/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('metaso-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="software-name">秘塔AI搜索</h3>
+                <p class="software-desc">无广告AI搜索引擎，直达结果</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('metaso-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 文心快码 -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://comate.baidu.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('comate-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="software-name">文心快码</h3>
+                <p class="software-desc">百度AI编程助手，百种语言支持</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('comate-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 即梦AI -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://dreamina.cn/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('dreamina-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="software-name">即梦AI</h3>
+                <p class="software-desc">字节跳动AI创作平台，文生图/视频</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('dreamina-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- 堆友AI反应堆 -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://d.design/ai">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('duiyou-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <h3 class="software-name">堆友AI反应堆</h3>
+                <p class="software-desc">阿里免费AI绘画，4K高清多风格</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('duiyou-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- ChatGPT -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://chatgpt.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('chatgpt-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 class="software-name">ChatGPT</h3>
+                <p class="software-desc">OpenAI 通用对话与创作平台</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('chatgpt-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Claude -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://claude.ai/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('claude-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="software-name">Claude</h3>
+                <p class="software-desc">Anthropic 高可靠对话与写作助手</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('claude-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Perplexity -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://www.perplexity.ai/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('perplexity-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="software-name">Perplexity</h3>
+                <p class="software-desc">AI 搜索与问答，支持引用与网页浏览</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('perplexity-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Gemini -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://gemini.google.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('gemini-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);">
+                    <i class="fab fa-google"></i>
+                </div>
+                <h3 class="software-name">Gemini</h3>
+                <p class="software-desc">Google 多模态 AI，对话/图像/代码</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('gemini-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Midjourney -->
+    <div class="software-card glass-ui" data-category="ai" data-website="https://www.midjourney.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('midjourney-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Midjourney</h3>
+                <p class="software-desc">顶级 AI 绘画，Discord 社区驱动</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('midjourney-detail')">详情</button>
+                </div>
+                <div class="category-tag">AI</div>
+            </div>
+
+            <!-- Cursor -->
+    <div class="software-card glass-ui" data-category="editor" data-website="https://cursor.sh/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('cursor-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="software-name">Cursor</h3>
+                <p class="software-desc">AI驱动的智能代码编辑器</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('cursor-detail')">详情</button>
+                </div>
+                <div class="category-tag">编程</div>
+            </div>
+
+            <!-- 汽水音乐 -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://www.qishui.com/download">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('qishui-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #e84393 0%, #fd79a8 100%);">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h3 class="software-name">汽水音乐</h3>
+                <p class="software-desc">字节跳动推出的音乐平台</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('qishui-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
+
+            <!-- 剪映专业版 -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://lv.ulikecam.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('jianying-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">
+                    <i class="fas fa-film"></i>
+                </div>
+                <h3 class="software-name">剪映专业版</h3>
+                <p class="software-desc">专业的视频剪辑软件</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('jianying-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
+
+            <!-- UU加速器 -->
+    <div class="software-card glass-ui" data-category="other" title="游戏加速必备工具" data-website="https://uu.163.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('uu-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3 class="software-name">UU加速器</h3>
+                <p class="software-desc">专业的游戏网络加速工具</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('uu-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
+
+            <!-- GitHub -->
+    <div class="software-card glass-ui" data-category="editor" data-website="https://github.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('github-info')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);">
+                    <i class="fab fa-github"></i>
+                </div>
+                <h3 class="software-name">GitHub</h3>
+                <p class="software-desc">全球最大的代码托管平台</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('github-detail')">详情</button>
+                </div>
+                <div class="category-tag">编程</div>
+            </div>
+
+            <!-- trace.moe 动漫场景搜索引擎 -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://trace.moe">
+                <div class="icon" style="background: linear-gradient(135deg, #00cec9 0%, #0984e3 100%);">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="software-name">trace.moe</h3>
+                <p class="software-desc">动漫场景搜索：上传截图，识别番剧与时间点</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('tracemoe-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
+
+            <!-- Bigjpg AI图片无损放大 -->
+    <div class="software-card glass-ui" data-category="tools" data-website="https://bigjpg.com/zh">
+                <div class="icon" style="background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Bigjpg</h3>
+                <p class="software-desc">AI图片无损放大（支持插画/照片多倍放大）</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('bigjpg-detail')">详情</button>
+                </div>
+                <div class="category-tag">工具</div>
+            </div>
+
+            <!-- Bigjpg AI 图片无损放大 -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://bigjpg.com/zh">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('bigjpg-detail')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="software-name">Bigjpg</h3>
+                <p class="software-desc">AI无损放大图片（卡通/照片，降噪与倍数）</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('bigjpg-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
+
+            <!-- 爱笔思画X -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://www.123865.com/s/FKZAjv-5wvud?pwd=6666#">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('ibispaintx-detail')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3 class="software-name">爱笔思画X (Ibispaint X)</h3>
+                <p class="software-desc">专业级移动端绘画应用，功能强大的数字艺术创作工具</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('ibispaintx-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="follow-text">关注我们</div>
+            
+            <div class="social-links">
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAiB-1t6AUFCmINDE5pHr7WKJnRolSav_1Tie3AH1ZJBg?from_tab_name=main" target="_blank" class="social-icon douyin" title="抖音">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://space.bilibili.com/689843944?spm_id_from=333.337.0.0" target="_blank" class="social-icon bilibili" title="哔哩哔哩">
+                    <i class="fab fa-bilibili"></i>
+                </a>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="togglePopup('about-info'); return false;">关于本站</a>
+                <a href="#" class="footer-link" onclick="togglePopup('disclaimer-info'); return false;">免责声明</a>
+            </div>
+            
+            <!-- 版权文字按需移除 -->
+        </footer>
+    </div>
+    
+    <!-- 关于本站弹窗 -->
+    <div id="about-info" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('about-info')">&times;</span>
+        <h3>关于本站</h3>
+        <p>本网站由 <a href="https://www.douyin.com/user/MS4wLjABAAAAiB-1t6AUFCmINDE5pHr7WKJnRolSav_1Tie3AH1ZJBg?from_tab_name=main" target="_blank" rel="noopener">蔡</a> 使用 Cursor&Trae混合 开发<br>资源来自网络精选收录<br>如有意见或建议，欢迎联系邮箱：<span id="email-address">liaozixing2007@outlook.com</span> <button class="copy-btn" onclick="copyEmail(this)" title="复制邮箱"><i class="fas fa-copy"></i></button><br>或联系QQ：<span id="qq-number">2730114583</span> <button class="copy-btn" onclick="copyQQ(this)" title="复制QQ号"><i class="fas fa-copy"></i></button></p>
+      </div>
+    </div>
+    <!-- 免责声明弹窗 -->
+    <div id="disclaimer-info" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('disclaimer-info')">&times;</span>
+        <h3>免责声明</h3>
+        <p>本站只提供网站导航，不提供软件下载。</p>
+      </div>
+    </div>
+    
+    <!-- 详情弹窗合集：为每个卡片的“详情”按钮提供内容 -->
+    <!-- VS Code 详情 -->
+    <div id="vscode-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('vscode-detail')">&times;</span>
+        <h3>Visual Studio Code 功能详情</h3>
+        <ul>
+          <li>可扩展插件生态：Git、调试器、代码片段等。</li>
+          <li>内置终端与多语言语法高亮。</li>
+          <li>智能提示与重构，支持远程开发。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PyCharm 详情 -->
+    <div id="pycharm-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('pycharm-detail')">&times;</span>
+        <h3>PyCharm 功能详情</h3>
+        <ul>
+          <li>专业 Python IDE，强大的代码分析。</li>
+          <li>集成调试、测试、版本控制。</li>
+          <li>Django、Flask 等 Web 框架支持。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WebStorm 详情 -->
+    <div id="webstorm-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('webstorm-detail')">&times;</span>
+        <h3>WebStorm 功能详情</h3>
+        <ul>
+          <li>前端开发利器：JS/TS/React/Vue 支持。</li>
+          <li>智能提示、重构与代码质量工具。</li>
+          <li>集成测试与调试，整合 npm/Yarn。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- IntelliJ IDEA 详情 -->
+    <div id="intellij-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('intellij-detail')">&times;</span>
+        <h3>IntelliJ IDEA 功能详情</h3>
+        <ul>
+          <li>Java/Kotlin 主力 IDE，强大重构能力。</li>
+          <li>Spring、Maven/Gradle 深度集成。</li>
+          <li>数据库工具与版本控制集成。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sublime Text 详情 -->
+    <div id="sublime-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('sublime-detail')">&times;</span>
+        <h3>Sublime Text 功能详情</h3>
+        <ul>
+          <li>轻量高速，强大的多光标编辑。</li>
+          <li>丰富的插件与主题生态。</li>
+          <li>跨平台与便携版支持。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 火绒 详情 -->
+    <div id="huorong-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('huorong-detail')">&times;</span>
+        <h3>火绒安全 功能详情</h3>
+        <ul>
+          <li>本地防护与行为分析。</li>
+          <li>弹窗拦截与网络防护。</li>
+          <li>占用低、稳定性好。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WeGame 详情 -->
+    <div id="wegame-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('wegame-detail')">&times;</span>
+        <h3>WeGame 功能详情</h3>
+        <ul>
+          <li>腾讯游戏平台，一站式管理。</li>
+          <li>社区与活动，云存档与加速。</li>
+          <li>便捷更新与启动器。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Steam 详情 -->
+    <div id="steam-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('steam-detail')">&times;</span>
+        <h3>Steam 功能详情</h3>
+        <ul>
+          <li>海量游戏库与社区功能。</li>
+          <li>云存档、成就与创意工坊。</li>
+          <li>跨平台与家庭共享。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Office Tool 详情 -->
+    <div id="office-tool-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('office-tool-detail')">&times;</span>
+        <h3>Office Tool 功能详情</h3>
+        <ul>
+          <li>Office 部署与组件选择。</li>
+          <li>版本管理与激活工具整合。</li>
+          <li>一键安装与备份。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 图吧工具箱 详情 -->
+    <div id="tbtool-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('tbtool-detail')">&times;</span>
+        <h3>图吧工具箱 功能详情</h3>
+        <ul>
+          <li>硬件检测与压力测试集合。</li>
+          <li>系统维护与优化工具。</li>
+          <li>便携集合，开箱即用。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bandizip 详情 -->
+    <div id="bandizip-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('bandizip-detail')">&times;</span>
+        <h3>Bandizip 功能详情</h3>
+        <ul>
+          <li>高效压缩与解压，多格式支持。</li>
+          <li>分卷压缩与密码保护。</li>
+          <li>快速预览与拖拽操作。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PotPlayer 详情 -->
+    <div id="potplayer-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('potplayer-detail')">&times;</span>
+        <h3>PotPlayer 功能详情</h3>
+        <ul>
+          <li>极佳性能与解码器支持。</li>
+          <li>字幕、多音轨与滤镜丰富。</li>
+          <li>高度自定义快捷键与皮肤。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HiBit Uninstaller 详情 -->
+    <div id="hibit-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('hibit-detail')">&times;</span>
+        <h3>HiBit Uninstaller 功能详情</h3>
+        <ul>
+          <li>深度卸载与残留清理。</li>
+          <li>启动项、服务与浏览器插件管理。</li>
+          <li>内置系统优化工具。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 微信 详情 -->
+    <div id="wechat-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('wechat-detail')">&times;</span>
+        <h3>微信 功能详情</h3>
+        <ul>
+          <li>即时通信与文件传输。</li>
+          <li>公众号、小程序生态。</li>
+          <li>多端同步与聊天记录。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- QQ 详情 -->
+    <div id="qq-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('qq-detail')">&times;</span>
+        <h3>QQ 功能详情</h3>
+        <ul>
+          <li>社交聊天与群管理。</li>
+          <li>文件传输与多设备登录。</li>
+          <li>丰富表情与个性装扮。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Adobe 详情 -->
+    <div id="adobe-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('adobe-detail')">&times;</span>
+        <h3>Adobe 套件 功能详情</h3>
+        <ul>
+          <li>Photoshop/Illustrator/Premiere 等专业工具。</li>
+          <li>图像、视频、排版与交互设计。</li>
+          <li>云服务与团队协作支持。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DeepSeek 详情 -->
+    <div id="deepseek-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('deepseek-detail')">&times;</span>
+        <h3>DeepSeek 功能详情</h3>
+        <ul>
+          <li>对话、写作与代码辅助。</li>
+          <li>多模型选择与长上下文支持。</li>
+          <li>知识库与插件扩展生态。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 豆包 详情 -->
+    <div id="doubao-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('doubao-detail')">&times;</span>
+        <h3>豆包 AI 功能详情</h3>
+        <ul>
+          <li>日常助手与创作工具集合。</li>
+          <li>多端使用与智能应用。</li>
+          <li>字节系生态深度整合。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 元宝 详情 -->
+    <div id="yuanbao-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('yuanbao-detail')">&times;</span>
+        <h3>腾讯元宝 功能详情</h3>
+        <ul>
+          <li>内容生成与智能问答。</li>
+          <li>企业级接入与文档处理。</li>
+          <li>插件与数据接入能力。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Cursor 详情 -->
+    <div id="cursor-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('cursor-detail')">&times;</span>
+        <h3>Cursor 功能详情</h3>
+        <ul>
+          <li>AI驱动代码编写与重构。</li>
+          <li>内联聊天与解释，提升效率。</li>
+          <li>与 Git/终端/调试器集成。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 汽水音乐 详情 -->
+    <div id="qishui-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('qishui-detail')">&times;</span>
+        <h3>汽水音乐 功能详情</h3>
+        <ul>
+          <li>音乐推荐与歌单分享。</li>
+          <li>高质量音频与多端同步。</li>
+          <li>社交互动与创作者支持。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 剪映专业版 详情 -->
+    <div id="jianying-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('jianying-detail')">&times;</span>
+        <h3>剪映专业版 功能详情</h3>
+        <ul>
+          <li>多轨道视频剪辑与特效。</li>
+          <li>调色、字幕与动画模板。</li>
+          <li>素材库与智能配乐。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 网易UU加速器 详情 -->
+    <div id="uu-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('uu-detail')">&times;</span>
+        <h3>网易 UU 加速器 功能详情</h3>
+        <ul>
+          <li>稳定低延迟的网络加速。</li>
+          <li>海量游戏支持与智能线路。</li>
+          <li>跨区加速与设备适配。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- GitHub 详情 -->
+    <div id="github-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('github-detail')">&times;</span>
+        <h3>GitHub 功能详情</h3>
+        <ul>
+          <li>代码托管与版本控制。</li>
+          <li>Issues、PR 与项目协作。</li>
+          <li>Actions 自动化与 Pages 部署。</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 软仓 RuanCang 详情 -->
+    <div id="ruancang-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('ruancang-detail')">&times;</span>
+        <h3>软仓 (RuanCang) 功能详情</h3>
+        <ul>
+          <li>宣称纯公益项目、无需注册、无广告。</li>
+          <li>提供绿色版与学习版软件资源。</li>
+          <li>覆盖设计、三维动画、影视后期、电子电路、办公等领域。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Convertio 详情 -->
+    <div id="convertio-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('convertio-detail')">&times;</span>
+        <h3>Convertio 功能详情</h3>
+        <ul>
+          <li>支持300+文件格式转换：文档、图片、视频、音频、电子书等。</li>
+          <li>多来源上传：本地、Dropbox、Google Drive、URL。</li>
+          <li>电子书格式互转：EPUB/MOBI/AZW3/PDF等。</li>
+          <li>拖放式上传界面，多语言支持（含中文）。</li>
+          <li>轻量使用免费，大文件需订阅。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Photopea 详情 -->
+    <div id="photopea-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('photopea-detail')">&times;</span>
+        <h3>Photopea 功能详情</h3>
+        <ul>
+          <li>完整支持PSD、Sketch等专业格式，在线直接编辑。</li>
+          <li>图层、滤镜、矢量绘图等专业功能。</li>
+          <li>兼容Photoshop快捷键，无需登录即可使用。</li>
+          <li>工具集齐全：套索、吸管、移动、画笔、橡皮擦、修复画笔、文字、渐变等。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Hotkey Cheatsheet 详情 -->
+    <div id="hotkey-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('hotkey-detail')">&times;</span>
+        <h3>Hotkey Cheatsheet 功能详情</h3>
+        <ul>
+          <li>支持Final Cut Pro、Photoshop、Premiere、After Effects等快捷键查询。</li>
+          <li>虚拟键盘显示，直观呈现按键布局。</li>
+          <li>Windows/Mac系统切换，便于跨平台使用。</li>
+          <li>完全免费无需注册，快速检索常用快捷键。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- LookAE 详情 -->
+    <div id="lookae-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('lookae-detail')">&times;</span>
+        <h3>LookAE 功能详情</h3>
+        <ul>
+          <li>After Effects 模板、插件与脚本资源库。</li>
+          <li>分类清晰，含片头、转场、字幕条、HUD 等。</li>
+          <li>大部分资源免费下载，每日更新。</li>
+          <li>提供预览视频与使用教程，新手友好。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Motion Array 详情 -->
+    <div id="motionarray-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('motionarray-detail')">&times;</span>
+        <h3>Motion Array 功能详情</h3>
+        <ul>
+          <li>一站式视频模板、音效、音乐、素材平台。</li>
+          <li>支持 AE / PR / Final Cut / DaVinci 等主流软件。</li>
+          <li>无限下载订阅制，商用授权清晰。</li>
+          <li>在线协作审片，团队共享资源库。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 新CG儿 详情 -->
+    <div id="newcger-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('newcger-detail')">&times;</span>
+        <h3>新CG儿 功能详情</h3>
+        <ul>
+          <li>国内老牌 CG 资源分享社区。</li>
+          <li>AE / C4D / 3ds Max 模板、模型、插件齐全。</li>
+          <li>免费资源占比高，积分下载制。</li>
+          <li>活跃论坛与作品展示区，便于学习交流。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ChatGPT 详情 -->
+    <div id="chatgpt-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('chatgpt-detail')">&times;</span>
+        <h3>ChatGPT 功能详情</h3>
+        <ul>
+          <li>通用对话、写作、代码、数据分析与图像理解。</li>
+          <li>支持 GPT-4 级能力与多模态（视地域与账号权限）。</li>
+          <li>生态丰富：插件、文件上传、团队协作等。</li>
+          <li>访问建议：需科学上网，注册需海外邮箱/手机号。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Claude 详情 -->
+    <div id="claude-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('claude-detail')">&times;</span>
+        <h3>Claude 功能详情</h3>
+        <ul>
+          <li>安全与可靠性优先，长文本理解与写作出色。</li>
+          <li>支持文件解析、代码辅助、结构化表格提取。</li>
+          <li>团队版支持共享项目与更高上下文。</li>
+          <li>访问建议：需科学上网，登录需海外手机号验证。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Perplexity 详情 -->
+    <div id="perplexity-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('perplexity-detail')">&times;</span>
+        <h3>Perplexity 功能详情</h3>
+        <ul>
+          <li>AI 搜索与问答，给出引用来源与可追踪链接。</li>
+          <li>支持网页浏览、文件上传与细化追问。</li>
+          <li>适合资料检索、学习与写作调研。</li>
+          <li>访问建议：通常需科学上网，国内网络不稳定。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Gemini 详情 -->
+    <div id="gemini-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('gemini-detail')">&times;</span>
+        <h3>Gemini 功能详情</h3>
+        <ul>
+          <li>Google 多模态模型，图像/文本/代码理解与生成。</li>
+          <li>与 Google 生态集成，支持 Drive 与文档协作。</li>
+          <li>适合研究与多模态创意场景。</li>
+          <li>访问建议：需科学上网并使用 Google 账户。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Midjourney 详情 -->
+    <div id="midjourney-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('midjourney-detail')">&times;</span>
+        <h3>Midjourney 功能详情</h3>
+        <ul>
+          <li>行业领先的 AI 绘画，风格独特、质量极高。</li>
+          <li>通过 Discord 使用，支持私聊与频道创作。</li>
+          <li>适合品牌视觉、概念设计与艺术创作。</li>
+          <li>访问建议：需科学上网，并可用 Discord 账户。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 秘塔AI搜索 详情 -->
+    <div id="metaso-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('metaso-detail')">&times;</span>
+        <h3>秘塔AI搜索 功能详情</h3>
+        <ul>
+          <li>无广告、无追踪，直达精准答案。</li>
+          <li>支持多轮对话与追问，自动总结要点。</li>
+          <li>提供引用来源，支持学术与专业检索。</li>
+          <li>每日免费额度充足，无需登录即可使用。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 文心快码 详情 -->
+    <div id="comate-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('comate-detail')">&times;</span>
+        <h3>文心快码 功能详情</h3>
+        <ul>
+          <li>百度自研大模型，支持100+编程语言。</li>
+          <li>实时代码续写、单测生成、注释与解释。</li>
+          <li>插件版支持VS Code / JetBrains全家桶。</li>
+          <li>个人版免费，企业版支持私有部署。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 即梦AI 详情 -->
+    <div id="dreamina-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('dreamina-detail')">&times;</span>
+        <h3>即梦AI 功能详情</h3>
+        <ul>
+          <li>一站式AI图片、视频、音乐生成。</li>
+          <li>中文提示词友好，模板丰富易上手。</li>
+          <li>智能画布支持多图融合与局部重绘。</li>
+          <li>每日免费积分，连续签到奖励翻倍。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 堆友AI反应堆 详情 -->
+    <div id="duiyou-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('duiyou-detail')">&times;</span>
+        <h3>堆友AI反应堆 功能详情</h3>
+        <ul>
+          <li>阿里自研SD XL模型，4K分辨率秒级出图。</li>
+          <li>15+固定风格+自定义融合，支持图生图。</li>
+          <li>1000+免费商用3D模型，在线调光调色。</li>
+          <li>每日登录即送堆豆，0门槛商用无忧。</li>
+        </ul>
+      </div>
+    </div>
+    <!-- trace.moe 详情 -->
+    <div id="tracemoe-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('tracemoe-detail')">&times;</span>
+        <h3>trace.moe 功能详情</h3>
+        <ul>
+          <li>上传动漫截图，识别番剧名称、集数、时间点与相似度。</li>
+          <li>返回片段预览视频与跳转链接，便于定位出处。</li>
+          <li>支持拖拽或粘贴图片，移动端同样可用。</li>
+          <li>提供 API，可用于自动化检索或集成到应用。</li>
+          <li>通常无需“科学上网”，若访问异常可尝试代理。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bigjpg 详情 -->
+    <div id="bigjpg-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('bigjpg-detail')">&times;</span>
+        <h3>Bigjpg 功能详情</h3>
+        <ul>
+          <li>AI 无损放大图片，支持卡通插画与照片两种风格 [0]。</li>
+          <li>降噪等级可选：无/低/中/高/最高（-1 至 3）[0]。</li>
+          <li>放大倍数：2x、4x、8x、16x（依套餐与大小限制）[0]。</li>
+          <li>免费版：每月 20 张，最大上传 5MB；高级版更高配额 [0]。</li>
+          <li>支持离线任务、批量放大与同时放大多张图片 [0]。</li>
+          <li>提供 API（创建任务、查询结果、重试任务），便于集成 [0]。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bigjpg 详情 -->
+    <div id="bigjpg-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('bigjpg-detail')">&times;</span>
+        <h3>Bigjpg 功能详情</h3>
+        <ul>
+          <li>基于深度卷积神经网络（CNN）的 AI 无损放大。</li>
+          <li>支持"插画/卡通"和"照片"两种风格，降噪可调。</li>
+          <li>最高可至 16x 放大，适合壁纸、打印等高分辨率需求。</li>
+          <li>提供任务式接口，支持批量与离线处理（付费方案可用）。</li>
+          <li>免费版每月有一定额度与大小限制，速度较慢。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 爱笔思画X 详情 -->
+    <div id="ibispaintx-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('ibispaintx-detail')">&times;</span>
+        <h3>爱笔思画X (Ibispaint X) 功能详情</h3>
+        <ul>
+          <li><strong>专业绘画功能：</strong>提供超过100种画笔工具，包括水彩、油画、铅笔、马克笔等，支持自定义画笔参数和纹理。</li>
+          <li><strong>图层系统：</strong>支持无限图层，提供图层混合模式、蒙版、剪贴蒙版等专业功能，满足复杂创作需求。</li>
+          <li><strong>滤镜与特效：</strong>内置丰富的滤镜效果，包括模糊、锐化、色调调整、艺术滤镜等，可实时预览效果。</li>
+          <li><strong>动画功能：</strong>支持逐帧动画制作，可导出为GIF或视频格式，适合制作动态插画和表情包。</li>
+          <li><strong>3D功能：</strong>提供3D模型导入和绘制功能，可在3D模型上直接绘画，实现立体效果。</li>
+          <li><strong>适用平台：</strong>Android、iOS、Windows、macOS</li>
+          <li><strong>系统要求：</strong>
+            <ul>
+              <li>Android: Android 5.0 或更高版本，建议 2GB RAM 以上</li>
+              <li>iOS: iOS 11.0 或更高版本，支持 iPhone 和 iPad</li>
+              <li>Windows: Windows 10 或更高版本</li>
+              <li>macOS: macOS 10.13 或更高版本</li>
+            </ul>
+          </li>
+          <li><strong>特色功能：</strong>支持压感笔（Apple Pencil、S Pen等），提供平滑的绘画体验；支持云同步，可在多设备间无缝切换创作。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="glass-ui" title="回到顶部" style="display:none;position:fixed;right:30px;bottom:92px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:2rem;cursor:pointer;">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <!-- 一键到底部按钮 -->
+    <button id="scroll-to-bottom" class="glass-ui" title="到底部" style="display:block;position:fixed;right:30px;bottom:40px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:2rem;cursor:pointer;">
+      <i class="fas fa-arrow-down"></i>
+    </button>
+    
+<script src="script.js" defer></script>
+<script src="popups.js" defer></script>
+</body>
+</html>
