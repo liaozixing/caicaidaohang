@@ -11,14 +11,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
     <script>
-        // 预设主题，避免首次渲染闪烁
         (function() {
             try {
-                var followSystem = JSON.parse(localStorage.getItem('followSystem') || 'true');
-                var manualTheme = localStorage.getItem('theme') || 'dark';
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                var theme = followSystem ? (prefersDark ? 'dark' : 'light') : manualTheme;
-                // 设置到 html 元素，确保 CSS 变量立即生效
+                var theme = prefersDark ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', theme);
             } catch (e) {
                 document.documentElement.setAttribute('data-theme', 'dark');
@@ -28,22 +24,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
         <header>
             <div class="header-top">
-                <div class="logo"></div>
+                <button id="mobile-menu-btn" class="hamburger-btn glass-ui" aria-label="打开菜单" aria-expanded="false" aria-controls="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">蔡蔡导航</div>
                 <div class="theme-controls">
-                    <div class="system-follow" title="跟随系统主题（开启后自动随系统变化）">
-                        <label class="switch" aria-label="跟随系统">
-                            <input type="checkbox" id="follow-system-checkbox" checked>
-                            <span class="slider" aria-hidden="true"></span>
-                        </label>
-                        <span class="switch-text" id="follow-system-text">跟随系统</span>
-                    </div>
-                    <div class="theme-toggle" id="theme-toggle" title="手动切换暗/亮主题（点击将关闭系统跟随）">
-                        <i class="fas fa-sun" id="theme-icon"></i>
-                    </div>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
+                        <i id="theme-icon" class="fas fa-sun"></i>
+                    </button>
+                    <label class="system-follow" for="follow-system-checkbox" title="跟随系统主题">
+                        <span>跟随系统</span>
+                        <div class="switch">
+                            <input id="follow-system-checkbox" type="checkbox" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </label>
                 </div>
+                <button id="mobile-search-toggle" class="nav-search-btn glass-ui" aria-label="打开搜索" aria-expanded="false" aria-controls="mobile-search-sheet">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
             <h1>蔡蔡导航</h1>
             <p class="subtitle">精选高效实用工具与优质网站，一站式访问官方网站与资源</p>
@@ -57,9 +58,9 @@
                 </div>
             </div>
         </header>
+    <div class="container">
         
         <div class="category-tabs-container">
-            
             <div class="category-tabs">
                 <div class="tab active" data-category="all">全部软件</div>
         <div class="tab glass-ui" data-category="security">安全防护</div>
@@ -70,8 +71,18 @@
         <div class="tab glass-ui" data-category="design">设计创意</div>
 <div class="tab glass-ui" data-category="ai">AI平台</div>
 <div class="tab glass-ui" data-category="editor">编程</div>
-<div class="tab glass-ui" data-category="other">软件资源</div>
-<div class="tab glass-ui" data-category="self">自研</div>
+        <div class="tab glass-ui" data-category="other">软件资源</div>
+        <div class="tab glass-ui" data-category="self">自研</div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu-overlay" aria-hidden="true">
+            <div class="mobile-menu-panel glass-ui" role="dialog">
+                <div class="mobile-menu-header">
+                    <span>全部标签</span>
+                    <button id="mobile-menu-close" class="close-btn glass-ui" aria-label="关闭菜单"><i class="fas fa-times"></i></button>
+                </div>
+                <div id="mobile-menu-content" class="mobile-menu-content"></div>
             </div>
         </div>
         
@@ -586,19 +597,7 @@
                 <div class="category-tag">编程</div>
             </div>
 
-            <!-- 汽水音乐 -->
-    <div class="software-card glass-ui" data-category="other" data-website="https://www.qishui.com/download">
-                <i class="fas fa-info-circle info-icon" onclick="togglePopup('qishui-info')"></i>
-                <div class="icon" style="background: linear-gradient(135deg, #e84393 0%, #fd79a8 100%);">
-                    <i class="fas fa-music"></i>
-                </div>
-                <h3 class="software-name">汽水音乐</h3>
-                <p class="software-desc">字节跳动推出的音乐平台</p>
-                <div class="button-group">
-            <button class="detail-btn glass-ui" onclick="togglePopup('qishui-detail')">详情</button>
-                </div>
-                <div class="category-tag">软件资源</div>
-            </div>
+            
 
             <!-- 剪映专业版 -->
     <div class="software-card glass-ui" data-category="other" data-website="https://lv.ulikecam.com/">
@@ -695,6 +694,20 @@
                 </div>
                 <div class="category-tag">软件资源</div>
             </div>
+
+            <!-- 奈飞工厂 NetflixGC -->
+    <div class="software-card glass-ui" data-category="other" data-website="https://www.netflixgc.com/">
+                <i class="fas fa-info-circle info-icon" onclick="togglePopup('netflixgc-detail')"></i>
+                <div class="icon" style="background: linear-gradient(135deg, #E50914 0%, #B20710 100%);">
+                    <i class="fas fa-tv"></i>
+                </div>
+                <h3 class="software-name">奈飞工厂 (NetflixGC)</h3>
+                <p class="software-desc">免费Netflix影视资源播放平台，涵盖电影、电视剧、动漫和综艺</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('netflixgc-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
         </div>
         
         <footer>
@@ -720,7 +733,7 @@
     
     <!-- 关于本站弹窗 -->
     <div id="about-info" class="popup">
-      <div class="popup-content">
+      <div class="popup-content glass-ui">
         <span class="popup-close" onclick="togglePopup('about-info')">&times;</span>
         <h3>关于本站</h3>
         <p>本网站由 <a href="https://www.douyin.com/user/MS4wLjABAAAAiB-1t6AUFCmINDE5pHr7WKJnRolSav_1Tie3AH1ZJBg?from_tab_name=main" target="_blank" rel="noopener">蔡</a> 使用 Cursor&Trae混合 开发<br>资源来自网络精选收录<br>如有意见或建议，欢迎联系邮箱：<span id="email-address">liaozixing2007@outlook.com</span> <button class="copy-btn" onclick="copyEmail(this)" title="复制邮箱"><i class="fas fa-copy"></i></button><br>或联系QQ：<span id="qq-number">2730114583</span> <button class="copy-btn" onclick="copyQQ(this)" title="复制QQ号"><i class="fas fa-copy"></i></button></p>
@@ -728,10 +741,22 @@
     </div>
     <!-- 免责声明弹窗 -->
     <div id="disclaimer-info" class="popup">
-      <div class="popup-content">
+      <div class="popup-content glass-ui">
         <span class="popup-close" onclick="togglePopup('disclaimer-info')">&times;</span>
         <h3>免责声明</h3>
         <p>本站只提供网站导航，不提供软件下载。</p>
+      </div>
+    </div>
+
+    <!-- 分享二维码弹窗 -->
+    <div id="share-qr" class="popup">
+      <div class="popup-content glass-ui">
+        <span class="popup-close" onclick="togglePopup('share-qr')">&times;</span>
+        <h3>分享二维码</h3>
+        <div class="qr-container open">
+          <img alt="二维码" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=https%3A%2F%2Fliaozixing.github.io%2Fcaicaidaohang%2F" />
+          <p class="qr-hint">扫码访问 蔡蔡导航</p>
+        </div>
       </div>
     </div>
     
@@ -1333,15 +1358,49 @@
       </div>
     </div>
 
+    <!-- 奈飞工厂 NetflixGC 详情 -->
+    <div id="netflixgc-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('netflixgc-detail')">&times;</span>
+        <h3>奈飞工厂 (NetflixGC) 功能详情</h3>
+        <ul>
+          <li><strong>丰富的影视资源：</strong>免费提供Netflix影视资源，涵盖电影、电视剧、动漫和综艺等内容。</li>
+          <li><strong>多语言支持：</strong>主要面向海外华人用户，提供多语言资源。</li>
+          <li><strong>分类导航：</strong>设有分类导航和排行榜单，便于查找内容。</li>
+          <li><strong>资源更新：</strong>资源更新紧跟Netflix官方，及时获取最新内容。</li>
+          <li><strong>网页播放：</strong>网站仅提供网页服务，不存储视频资源。</li>
+        </ul>
+        <div style="margin-top: 20px; padding: 15px; background: rgba(229, 9, 20, 0.1); border-left: 4px solid #E50914; border-radius: 4px;">
+          <p style="margin: 0 0 10px 0; font-weight: bold; color: #E50914;"><i class="fas fa-exclamation-triangle"></i> 重要提示：</p>
+          <ul style="margin: 0; padding-left: 20px; color: #E50914;">
+            <li>网站包含伦理片分类，<strong>未满18岁禁止观看</strong></li>
+            <li>部分内容可能包含<strong>暴力、血腥、脏话</strong>等成人内容</li>
+            <li>请根据个人接受程度谨慎选择观看内容</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <!-- 回到顶部按钮 -->
     <button id="back-to-top" class="glass-ui" title="回到顶部" style="display:none;position:fixed;right:30px;bottom:92px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:2rem;cursor:pointer;">
       <i class="fas fa-arrow-up"></i>
+    </button>
+    <!-- 分享二维码按钮（置于回到顶部按钮之上） -->
+    <button id="share-btn" class="glass-ui" title="分享二维码" style="display:block;position:fixed;right:30px;bottom:150px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:1.6rem;cursor:pointer;" onclick="togglePopup('share-qr')">
+      <i class="fas fa-qrcode"></i>
     </button>
     <!-- 一键到底部按钮 -->
     <button id="scroll-to-bottom" class="glass-ui" title="到底部" style="display:block;position:fixed;right:30px;bottom:40px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:2rem;cursor:pointer;">
       <i class="fas fa-arrow-down"></i>
     </button>
     
+<div id="mobile-search-sheet" class="mobile-search-sheet" aria-hidden="true">
+  <div class="mobile-search-inner glass-ui">
+    <input id="mobile-search-input" type="text" placeholder="搜索软件或工具..." />
+    <button id="mobile-search-submit" class="search-submit-btn glass-ui" aria-label="开始搜索"><i class="fas fa-search"></i></button>
+  </div>
+  <button id="mobile-search-close" class="close-btn glass-ui" aria-label="关闭搜索"><i class="fas fa-times"></i></button>
+</div>
 <script src="script.js" defer></script>
 <script src="popups.js" defer></script>
 </body>

@@ -21,13 +21,18 @@ function initThemeControls() {
     const htmlEl = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // 偏好：默认跟随系统，手动偏好默认暗色
     let followSystem = true;
     let manualTheme = 'dark';
-    try {
-        followSystem = JSON.parse(localStorage.getItem('followSystem') || 'true');
-        manualTheme = localStorage.getItem('theme') || 'dark';
-    } catch (e) {}
+
+    // 从本地存储恢复设置
+    const storedFollow = localStorage.getItem('followSystem');
+    const storedTheme = localStorage.getItem('theme');
+    if (storedFollow !== null) {
+        followSystem = storedFollow === 'true';
+    }
+    if (storedTheme) {
+        manualTheme = storedTheme;
+    }
 
     function updateIcon(theme) {
         if (!themeIcon) return;
@@ -50,14 +55,13 @@ function initThemeControls() {
         applyTheme(theme);
     }
 
-    // 初始化复选框与主题
     if (followSystemCheckbox) {
         followSystemCheckbox.checked = !!followSystem;
     }
     if (followSystem) {
         syncWithSystem();
     } else {
-        applyTheme(manualTheme);
+        applyTheme(manualTheme || (mediaQuery.matches ? 'dark' : 'light'));
     }
 
     // 跟随系统开关变化
@@ -101,16 +105,19 @@ function initThemeControls() {
             localStorage.setItem('theme', newTheme);
 
             // 切换动画效果
-            themeToggle.style.transform = 'scale(0.8)';
+            themeToggle.style.transform = 'scale(0.9)';
+            htmlEl.classList.add('theme-animating');
             setTimeout(() => {
                 themeToggle.style.transform = 'scale(1)';
-            }, 150);
+                htmlEl.classList.remove('theme-animating');
+            }, 200);
         });
     }
 }
 
 // 页面加载时初始化主题控制
 window.addEventListener('DOMContentLoaded', initThemeControls);
+window.addEventListener('DOMContentLoaded', initMobileUI);
 
 function updateScrollButtons() {
     const tabsContainer = document.querySelector('.category-tabs');
@@ -558,3 +565,122 @@ function applyGlassUI() {
 }
 
 window.addEventListener('DOMContentLoaded', applyGlassUI);
+
+function initMobileUI() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const menuOverlay = document.getElementById('mobile-menu');
+    const menuClose = document.getElementById('mobile-menu-close');
+    const menuContent = document.getElementById('mobile-menu-content');
+    const tabs = document.querySelector('.category-tabs');
+    const searchToggle = document.getElementById('mobile-search-toggle');
+    const searchSheet = document.getElementById('mobile-search-sheet');
+    const searchClose = document.getElementById('mobile-search-close');
+    const searchSubmit = document.getElementById('mobile-search-submit');
+    const searchInput = document.getElementById('mobile-search-input');
+    const desktopSearchBox = document.querySelector('.search-box');
+
+    if (tabs && menuContent && !menuContent.dataset.init) {
+        menuContent.dataset.init = '1';
+        const clone = tabs.cloneNode(true);
+        menuContent.appendChild(clone);
+        clone.querySelectorAll('.tab').forEach(el => {
+            el.addEventListener('click', () => {
+                const cat = el.getAttribute('data-category');
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll(`.tab[data-category="${cat}"]`).forEach(t => t.classList.add('active'));
+                const title = document.querySelector('.category-title');
+                const names = {security:'安全防护',tools:'实用工具',multimedia:'多媒体',social:'社交办公',gaming:'游戏平台',design:'设计创意',ai:'AI平台',editor:'编程',other:'软件资源',self:'自研'};
+                title.textContent = cat==='all' ? '精选软件推荐' : (names[cat]||'自研') + (cat==='self'?'':'软件');
+                let visibleCount = 0;
+                document.querySelectorAll('.software-card').forEach((card, index) => {
+                    const match = (cat==='all' || card.getAttribute('data-category')===cat);
+                    if (match) {
+                        card.style.display = 'flex';
+                        setTimeout(() => { card.style.opacity='1'; card.style.transform='translateY(0)'; }, index*50);
+                        visibleCount++;
+                    } else {
+                        card.style.opacity='0'; card.style.transform='translateY(20px)';
+                        setTimeout(() => { card.style.display='none'; }, 300);
+                    }
+                });
+                const emptyEl = document.querySelector('.empty-category') || createEmptyCategoryElement();
+                if (cat!=='all') {
+                    if (visibleCount===0) {
+                        emptyEl.querySelector('p').textContent='正在开发中';
+                        emptyEl.style.display='flex';
+                        setTimeout(()=>{ emptyEl.style.opacity='1'; emptyEl.style.transform='translateY(0)'; },100);
+                    } else {
+                        emptyEl.style.opacity='0'; emptyEl.style.transform='translateY(20px)';
+                        setTimeout(()=>{ emptyEl.style.display='none'; },300);
+                    }
+                }
+                closeMenu();
+            });
+        });
+    }
+
+    function openMenu() {
+        if (!menuOverlay) return;
+        menuOverlay.classList.add('open');
+        menuOverlay.setAttribute('aria-hidden', 'false');
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+        if (!menuOverlay) return;
+        menuOverlay.classList.remove('open');
+        menuOverlay.setAttribute('aria-hidden', 'true');
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    }
+    function toggleMenu() {
+        if (!menuOverlay) return;
+        menuOverlay.classList.contains('open') ? closeMenu() : openMenu();
+    }
+
+    function openSearch() {
+        if (!searchSheet) return;
+        searchSheet.classList.add('open');
+        searchSheet.setAttribute('aria-hidden', 'false');
+        if (searchToggle) searchToggle.setAttribute('aria-expanded', 'true');
+        setTimeout(() => { if (searchInput) searchInput.focus(); }, 50);
+    }
+    function closeSearch() {
+        if (!searchSheet) return;
+        searchSheet.classList.remove('open');
+        searchSheet.setAttribute('aria-hidden', 'true');
+        if (searchToggle) searchToggle.setAttribute('aria-expanded', 'false');
+    }
+    function toggleSearch() {
+        if (!searchSheet) return;
+        searchSheet.classList.contains('open') ? closeSearch() : openSearch();
+    }
+
+    if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+    if (menuClose) menuClose.addEventListener('click', closeMenu);
+    if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+
+    if (searchToggle) searchToggle.addEventListener('click', toggleSearch);
+    if (searchClose) searchClose.addEventListener('click', closeSearch);
+    if (searchSheet) searchSheet.addEventListener('click', (e) => { if (e.target === searchSheet) closeSearch(); });
+    if (searchSubmit) searchSubmit.addEventListener('click', () => {
+        if (desktopSearchBox) {
+            desktopSearchBox.value = searchInput ? searchInput.value : '';
+            performSearch();
+            closeSearch();
+        }
+    });
+
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            if (desktopSearchBox) desktopSearchBox.value = searchInput.value;
+        });
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                if (desktopSearchBox) {
+                    desktopSearchBox.value = searchInput.value;
+                    performSearch();
+                    closeSearch();
+                }
+            }
+        });
+    }
+}
