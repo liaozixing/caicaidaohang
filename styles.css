@@ -870,7 +870,7 @@ footer {
     height: 100%;
     background: transparent; /* 背景不调暗 */
     pointer-events: none;    /* 允许滚动与点击穿透到页面 */
-    z-index: 1000;
+    z-index: 3000;
     justify-content: center;
     align-items: center;
 }
@@ -894,6 +894,10 @@ footer {
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     pointer-events: auto;
     color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .popup-content { margin-top: 12px; }
 }
 
 .popup-close {
