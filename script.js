@@ -17,94 +17,49 @@ function scrollTabs(direction) {
 function initThemeControls() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    const followSystemCheckbox = document.getElementById('follow-system-checkbox');
     const htmlEl = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    let followSystem = true;
-    let manualTheme = 'dark';
+    let mode = localStorage.getItem('themeMode') || 'system';
 
-    // 从本地存储恢复设置
-    const storedFollow = localStorage.getItem('followSystem');
-    const storedTheme = localStorage.getItem('theme');
-    if (storedFollow !== null) {
-        followSystem = storedFollow === 'true';
-    }
-    if (storedTheme) {
-        manualTheme = storedTheme;
+    function resolveTheme() {
+        return mode === 'system' ? (mediaQuery.matches ? 'dark' : 'light') : mode;
     }
 
-    function updateIcon(theme) {
+    function updateIcon() {
         if (!themeIcon) return;
-        if (theme === 'dark') {
-            themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.remove('fa-sun', 'fa-moon', 'fa-desktop');
+        if (mode === 'system') {
+            themeIcon.classList.add('fa-desktop');
+        } else if (mode === 'dark') {
             themeIcon.classList.add('fa-moon');
         } else {
-            themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
         }
     }
 
-    function applyTheme(theme) {
-        htmlEl.setAttribute('data-theme', theme);
-        updateIcon(theme);
+    function applyTheme() {
+        htmlEl.setAttribute('data-theme', resolveTheme());
+        updateIcon();
     }
 
-    function syncWithSystem() {
-        const theme = mediaQuery.matches ? 'dark' : 'light';
-        applyTheme(theme);
-    }
+    applyTheme();
 
-    if (followSystemCheckbox) {
-        followSystemCheckbox.checked = !!followSystem;
-    }
-    if (followSystem) {
-        syncWithSystem();
-    } else {
-        applyTheme(manualTheme || (mediaQuery.matches ? 'dark' : 'light'));
-    }
-
-    // 跟随系统开关变化
-    if (followSystemCheckbox) {
-        followSystemCheckbox.addEventListener('change', (e) => {
-            followSystem = e.target.checked;
-            localStorage.setItem('followSystem', JSON.stringify(followSystem));
-            if (followSystem) {
-                syncWithSystem();
-            } else {
-                applyTheme(manualTheme);
-            }
-        });
-    }
-
-    // 监听系统主题变化
     if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener('change', (e) => {
-            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
+        mediaQuery.addEventListener('change', () => {
+            if (mode === 'system') applyTheme();
         });
     } else if (mediaQuery.addListener) {
-        mediaQuery.addListener((e) => {
-            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
+        mediaQuery.addListener(() => {
+            if (mode === 'system') applyTheme();
         });
     }
 
-    // 手动切换按钮
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            // 若当前开启跟随系统，点击手动切换将关闭跟随系统
-            if (followSystem) {
-                followSystem = false;
-                localStorage.setItem('followSystem', 'false');
-                if (followSystemCheckbox) followSystemCheckbox.checked = false;
-            }
-
-            const currentTheme = htmlEl.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            manualTheme = newTheme;
-            applyTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
-
-            // 切换动画效果
+            mode = mode === 'system' ? 'light' : (mode === 'light' ? 'dark' : 'system');
+            localStorage.setItem('themeMode', mode);
+            applyTheme();
             themeToggle.style.transform = 'scale(0.9)';
             htmlEl.classList.add('theme-animating');
             setTimeout(() => {

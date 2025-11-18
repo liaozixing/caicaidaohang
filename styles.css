@@ -40,17 +40,13 @@
 }
 
 body {
-    background: url('1.PNG') center center / cover no-repeat fixed, var(--bg-primary);
+    background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
     padding: 0 20px 20px;
     min-height: 100vh;
     background-attachment: fixed;
     transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-}
-
-[data-theme="dark"] body {
-    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('1.PNG') center center / cover no-repeat fixed, var(--bg-primary);
 }
 
 .container {
@@ -315,12 +311,7 @@ body {
         flex-direction: row;
         flex-wrap: nowrap;
         gap: 12px;
-        justify-content: space-between;
-        width: 220px;
-    }
-    .theme-controls .system-follow {
-        min-width: 0;
-        flex: 1 1 auto;
+        justify-content: flex-end;
     }
     .theme-toggle { flex: 0 0 auto; }
     .rocket-stage { padding: 8px 0; }
