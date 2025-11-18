@@ -13,72 +13,98 @@ function scrollTabs(direction) {
     updateScrollButtons();
 }
 
+// 主题切换与跟随系统功能
 function initThemeControls() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
+    const followSystemCheckbox = document.getElementById('follow-system-checkbox');
     const htmlEl = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    let mode = 'system';
+    let followSystem = true;
     let manualTheme = 'dark';
 
-    const storedMode = sessionStorage.getItem('themeMode');
-    if (storedMode) {
-        mode = storedMode;
-        if (mode === 'light' || mode === 'dark') manualTheme = mode;
-    } else {
-        mode = 'system';
+    // 从本地存储恢复设置
+    const storedFollow = localStorage.getItem('followSystem');
+    const storedTheme = localStorage.getItem('theme');
+    if (storedFollow !== null) {
+        followSystem = storedFollow === 'true';
+    }
+    if (storedTheme) {
+        manualTheme = storedTheme;
     }
 
-    function getSystemTheme() {
-        return mediaQuery.matches ? 'dark' : 'light';
-    }
-
-    function updateIcon(m) {
+    function updateIcon(theme) {
         if (!themeIcon) return;
-        themeIcon.classList.remove('fa-sun', 'fa-moon', 'fa-desktop');
-        if (m === 'system') {
-            themeIcon.classList.add('fa-desktop');
-        } else if (m === 'dark') {
+        if (theme === 'dark') {
+            themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
         } else {
+            themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
         }
     }
 
-    function applyMode(m) {
-        const theme = m === 'system' ? getSystemTheme() : m;
+    function applyTheme(theme) {
         htmlEl.setAttribute('data-theme', theme);
-        updateIcon(m);
+        updateIcon(theme);
     }
 
-    applyMode(mode);
+    function syncWithSystem() {
+        const theme = mediaQuery.matches ? 'dark' : 'light';
+        applyTheme(theme);
+    }
 
+    if (followSystemCheckbox) {
+        followSystemCheckbox.checked = !!followSystem;
+    }
+    if (followSystem) {
+        syncWithSystem();
+    } else {
+        applyTheme(manualTheme || (mediaQuery.matches ? 'dark' : 'light'));
+    }
+
+    // 跟随系统开关变化
+    if (followSystemCheckbox) {
+        followSystemCheckbox.addEventListener('change', (e) => {
+            followSystem = e.target.checked;
+            localStorage.setItem('followSystem', JSON.stringify(followSystem));
+            if (followSystem) {
+                syncWithSystem();
+            } else {
+                applyTheme(manualTheme);
+            }
+        });
+    }
+
+    // 监听系统主题变化
     if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener('change', () => {
-            if (mode === 'system') applyMode('system');
+        mediaQuery.addEventListener('change', (e) => {
+            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
         });
     } else if (mediaQuery.addListener) {
-        mediaQuery.addListener(() => {
-            if (mode === 'system') applyMode('system');
+        mediaQuery.addListener((e) => {
+            if (followSystem) applyTheme(e.matches ? 'dark' : 'light');
         });
     }
 
+    // 手动切换按钮
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            if (mode === 'system') {
-                mode = 'light';
-                manualTheme = 'light';
-            } else if (mode === 'light') {
-                mode = 'dark';
-                manualTheme = 'dark';
-            } else {
-                mode = 'system';
+            // 若当前开启跟随系统，点击手动切换将关闭跟随系统
+            if (followSystem) {
+                followSystem = false;
+                localStorage.setItem('followSystem', 'false');
+                if (followSystemCheckbox) followSystemCheckbox.checked = false;
             }
 
-            sessionStorage.setItem('themeMode', mode);
-            applyMode(mode);
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            manualTheme = newTheme;
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
 
+            // 切换动画效果
             themeToggle.style.transform = 'scale(0.9)';
             htmlEl.classList.add('theme-animating');
             setTimeout(() => {
@@ -87,14 +113,6 @@ function initThemeControls() {
             }, 200);
         });
     }
-
-    window.addEventListener('beforeunload', function() {
-        sessionStorage.removeItem('themeMode');
-    });
-
-    window.addEventListener('beforeunload', function() {
-        localStorage.setItem('visited', '1');
-    });
 }
 
 // 页面加载时初始化主题控制

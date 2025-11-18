@@ -17,7 +17,7 @@
                 var theme = prefersDark ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', theme);
             } catch (e) {
-                document.documentElement.setAttribute('data-theme', 'light');
+                document.documentElement.setAttribute('data-theme', 'dark');
             }
         })();
     </script>
@@ -32,8 +32,15 @@
                 <div class="logo">蔡蔡导航</div>
                 <div class="theme-controls">
                     <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
-                        <i id="theme-icon" class="fas fa-desktop"></i>
+                        <i id="theme-icon" class="fas fa-sun"></i>
                     </button>
+                    <label class="system-follow" for="follow-system-checkbox" title="跟随系统主题">
+                        <span>系统</span>
+                        <div class="switch">
+                            <input id="follow-system-checkbox" type="checkbox" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </label>
                 </div>
                 <button id="mobile-search-toggle" class="nav-search-btn glass-ui" aria-label="打开搜索" aria-expanded="false" aria-controls="mobile-search-sheet">
                     <i class="fas fa-search"></i>
@@ -737,7 +744,7 @@
       <div class="popup-content glass-ui">
         <span class="popup-close" onclick="togglePopup('disclaimer-info')">&times;</span>
         <h3>免责声明</h3>
-        <p>本站提供网站导航与部分软件资源下载（含第三方网盘软件资源链接）。所有资源汇集自官方渠道与公开网络，用于学习与交流，如有侵权或不当之处，请通过“关于本站”中提供的联系方式与我们联系，核实后将及时处理。</p>
+        <p>本站只提供网站导航，不提供软件下载。</p>
       </div>
     </div>
 
