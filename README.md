@@ -94,3 +94,69 @@
 - 搜索结果空态更多引导；移动端手势关闭弹窗和菜单。
 
 - 可选的 PWA 支持：离线缓存与安装到桌面。
+
+## 导航卡片组件使用与维护指南
+
+### 1. 组件使用说明
+- 组件路径：页面内置的导航卡片采用标准化的 HTML 结构，位于 `index.html` 的 `.software-grid` 容器下，每个卡片为一个 `.software-card` 节点。
+- 主逻辑：交互与分类展示逻辑位于 `script.js`，依赖卡片上的 `data-category` 与 `data-website` 属性进行过滤与跳转。
+- 样式文件路径：卡片样式位于 `styles.css`（如 `.software-card`、`.glass-ui`、`.icon`、`.category-tag` 等）。
+- 使用示例代码（HTML）：
+  ```html
+  <div class="software-card glass-ui" data-category="tools" data-website="https://example.com/">
+    <i class="fas fa-info-circle info-icon" onclick="togglePopup('example-info')"></i>
+    <div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);">
+      <i class="fas fa-wrench"></i>
+    </div>
+    <h3 class="software-name">工具名称</h3>
+    <p class="software-desc">简短描述</p>
+    <div class="button-group">
+      <button class="detail-btn glass-ui" onclick="togglePopup('example-detail')">详情</button>
+    </div>
+    <div class="category-tag">实用工具</div>
+  </div>
+  ```
+
+### 2. 卡片更新维护指南
+
+#### 2.1 修改现有卡片
+- 在 `index.html` 中找到对应的 `.software-card`，直接编辑卡片内容与属性。
+- 支持修改的参数：
+  - `software-name`（标题）、`software-desc`（描述）、`category-tag`（标签文本）
+  - `data-website`（跳转链接）、`data-category`（分类：`security`、`tools`、`multimedia`、`social`、`gaming`、`design`、`ai`、`editor`、`other`、`self`）
+  - 图标：在 `.icon > i` 中使用 Font Awesome 类名（例如 `fas fa-wrench`）。
+
+#### 2.2 添加新卡片
+- 在 `index.html` 的 `.software-grid` 中复制一段现有 `.software-card` 作为模板。
+- 按相同结构添加新卡片，并确保以下必填字段：
+  - `data-category`（用于分类过滤）
+  - `data-website`（用于跳转与二维码生成）
+  - `.software-name`（标题）
+  - `.software-desc`（描述）
+  - `.icon > i`（图标）与 `.category-tag`（标签文本）
+- 显示顺序由 DOM 顺序决定；若需排序，可调整卡片在 `index.html` 中的位置。
+- 若未来改为外部数据驱动，可参考如下数据模板（当前项目为内联结构，仅供参考）：
+  ```json
+  {
+    "id": "example-id",
+    "title": "工具名称",
+    "icon": "fas fa-wrench",
+    "link": "https://example.com/",
+    "category": "tools",
+    "description": "简短描述",
+    "order": 100
+  }
+  ```
+
+### 3. 组件替换说明
+- 如需整体替换导航卡片样式，请修改 `styles.css` 中的相关选择器（如 `.software-card`、`.glass-ui`、`.icon`、`.button-group`、`.category-tag`）。
+- 主逻辑处理文件路径：`script.js`（负责标签切换、搜索、空态提示与移动端菜单）。
+- 保持接口不变：务必保留现有 class 与 `data-website`、`data-category` 属性，以确保分类过滤、跳转与二维码等功能正常工作。
+
+### 4. 注意事项
+- 本项目为静态站点，当前未内置 `npm` 测试与 ESLint 脚本。
+- 如需引入构建与校验流程，可在后续添加：
+  - 测试命令：`npm run test:cards`（待在项目脚本中实现）
+  - ESLint 校验：`npm run lint`（待在项目脚本中实现）
+  - 变更记录：在 `CHANGELOG.md` 中登记（如启用变更日志）
+- 修改后建议本地预览验证：在项目根目录运行 `python -m http.server 5500` 并访问 `http://localhost:5500/`。

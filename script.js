@@ -131,7 +131,7 @@ document.querySelectorAll('.tab').forEach(tab => {
         
         // 显示/隐藏软件卡片，添加动画效果
         let visibleCount = 0;
-        document.querySelectorAll('.software-card').forEach((card, index) => {
+document.querySelectorAll('.software-card').forEach((card, index) => {
             if (category === 'all' || card.getAttribute('data-category') === category) {
                 card.style.display = 'flex';
                 // 添加延迟动画效果
@@ -149,7 +149,6 @@ document.querySelectorAll('.tab').forEach(tab => {
             }
         });
 
-        // 空分类提示：无匹配卡片时显示“正在开发中”
         if (category !== 'all') {
             if (visibleCount === 0) {
                 emptyEl.querySelector('p').textContent = '正在开发中';
@@ -165,6 +164,12 @@ document.querySelectorAll('.tab').forEach(tab => {
                     emptyEl.style.display = 'none';
                 }, 300);
             }
+        } else {
+            emptyEl.style.opacity = '0';
+            emptyEl.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                emptyEl.style.display = 'none';
+            }, 300);
         }
     });
 });
@@ -400,6 +405,21 @@ window.addEventListener('load', () => {
     });
 });
 
+function isMobile() { return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent); }
+function smoothScrollTo(targetY, duration = 600) {
+  const startY = window.scrollY || document.documentElement.scrollTop || 0;
+  const delta = targetY - startY;
+  const startTime = performance.now();
+  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  function step(now) {
+    const progress = Math.min(1, (now - startTime) / duration);
+    const y = startY + delta * ease(progress);
+    window.scrollTo(0, y);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 // 回到顶部按钮功能
 const backToTopBtn = document.getElementById('back-to-top');
 if (backToTopBtn) {
@@ -411,7 +431,7 @@ if (backToTopBtn) {
     }
   }, { passive: true });
   backToTopBtn.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    smoothScrollTo(0, isMobile() ? 400 : 600);
   });
 }
 
@@ -424,7 +444,15 @@ if (scrollToBottomBtn) {
   }, { passive: true });
   scrollToBottomBtn.addEventListener('click', function() {
     const totalHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-    window.scrollTo({ top: totalHeight, behavior: 'smooth' });
+    const isMobileEnv = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    const duration = isMobileEnv ? 500 : 800;
+    const backToTopBtnExists = document.getElementById('back-to-top');
+    if (typeof smoothScrollTo === 'function') {
+      smoothScrollTo(totalHeight, duration);
+    } else {
+      window.scrollTo(0, totalHeight);
+    }
+    if (backToTopBtnExists) backToTopBtnExists.style.display = 'block';
   });
 }
 
@@ -568,6 +596,9 @@ function initMobileUI() {
                         emptyEl.style.opacity='0'; emptyEl.style.transform='translateY(20px)';
                         setTimeout(()=>{ emptyEl.style.display='none'; },300);
                     }
+                } else {
+                    emptyEl.style.opacity='0'; emptyEl.style.transform='translateY(20px)';
+                    setTimeout(()=>{ emptyEl.style.display='none'; },300);
                 }
                 closeMenu();
             });
