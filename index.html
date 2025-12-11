@@ -701,6 +701,17 @@
                 </div>
                 <div class="category-tag">软件资源</div>
             </div>
+            <div class="software-card glass-ui" data-category="other" data-website="https://www.oalib.com/">
+                <div class="icon" style="background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 class="software-name">Open Access Library (OALib)</h3>
+                <p class="software-desc">开放获取学术文献平台，免费检索与下载全文</p>
+                <div class="button-group">
+            <button class="detail-btn glass-ui" onclick="togglePopup('oalib-detail')">详情</button>
+                </div>
+                <div class="category-tag">软件资源</div>
+            </div>
         </div>
         
         <footer>
@@ -1373,6 +1384,18 @@
         </div>
       </div>
     </div>
+    <div id="oalib-detail" class="popup">
+      <div class="popup-content">
+        <span class="popup-close" onclick="togglePopup('oalib-detail')">&times;</span>
+        <h3>Open Access Library (OALib) 功能详情</h3>
+        <ul>
+          <li>开放获取学术文献聚合，覆盖多学科领域。</li>
+          <li>免费检索、阅读与下载论文，含自有期刊与预印本仓库。</li>
+          <li>无需注册即可获取全文，访问门槛低。</li>
+          <li>来源质量与影响力不及主流数据库，需自行甄别。</li>
+        </ul>
+      </div>
+    </div>
 
     <!-- 回到顶部按钮 -->
     <button id="back-to-top" class="glass-ui" title="回到顶部" style="display:none;position:fixed;right:30px;bottom:92px;z-index:2000;width:48px;height:48px;border-radius:50%;font-size:2rem;cursor:pointer;">
@@ -1396,5 +1419,16 @@
 </div>
 <script src="script.js" defer></script>
 <script src="popups.js" defer></script>
+    <!-- 全局二维码弹窗 -->
+    <div id="qr-popup" class="qr-popup-overlay" onclick="hideQrPopup()">
+        <div class="qr-popup-content" onclick="event.stopPropagation()">
+            <span class="qr-popup-close" onclick="hideQrPopup()">&times;</span>
+            <h4 id="qr-popup-title"></h4>
+            <div id="qr-loader"></div>
+            <img id="qr-popup-img" alt="二维码" style="display: none;">
+            <p>扫描二维码在手机上访问</p>
+        </div>
+    </div>
+
 </body>
 </html>

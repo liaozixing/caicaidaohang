@@ -44,28 +44,74 @@ document.addEventListener('keydown', function(e) {
     }
 }); 
 
-// 详情弹窗：注入“在移动端查看”和“访问官网”按钮，以及二维码
+// 全局二维码弹窗控制
+function showQrPopup(url, title = '扫描二维码') {
+    const qrPopup = document.getElementById('qr-popup');
+    const qrImg = document.getElementById('qr-popup-img');
+    const qrTitle = document.getElementById('qr-popup-title');
+    const qrLoader = document.getElementById('qr-loader');
+    if (!qrPopup || !qrImg || !qrTitle || !qrLoader) return;
+
+    qrTitle.textContent = title;
+    qrPopup.classList.add('active');
+
+    if (url) {
+        qrLoader.style.display = 'block';
+        qrImg.style.display = 'none';
+
+        const api = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=10&data=${encodeURIComponent(url)}`;
+        
+        qrImg.onload = () => {
+            qrLoader.style.display = 'none';
+            qrImg.style.display = 'block';
+        };
+        qrImg.onerror = () => {
+            qrLoader.style.display = 'none';
+            qrTitle.textContent = '二维码加载失败';
+            qrImg.style.display = 'none';
+        };
+
+        qrImg.src = api;
+        qrImg.alt = `二维码链接: ${url}`;
+    } else {
+        qrTitle.textContent = '未找到有效链接';
+        qrLoader.style.display = 'none';
+        qrImg.style.display = 'none';
+    }
+}
+
+function hideQrPopup() {
+    const qrPopup = document.getElementById('qr-popup');
+    if (qrPopup) {
+        qrPopup.classList.remove('active');
+    }
+}
+
+// 详情弹窗：注入“显示二维码”和“访问官网”按钮
 function initDetailMobileView() {
   const detailMap = {};
-  // 构建详情弹窗ID与官网链接的映射
+  // 构建详情弹窗ID与官网链接、标题的映射
   document.querySelectorAll('.detail-btn[onclick^="togglePopup("]').forEach(btn => {
     const m = btn.getAttribute('onclick').match(/'(.+?)'/);
     if (m) {
       const id = m[1];
       const card = btn.closest('.software-card');
       let link = '';
+      let title = '';
       if (card) {
         link = card.dataset.website || '';
         if (!link) {
           const a = card.querySelector('.visit-btn');
           link = a ? a.href : '';
         }
+        const nameEl = card.querySelector('.software-name');
+        title = nameEl ? nameEl.textContent.trim() : '未知网站';
       }
-      detailMap[id] = link;
+      detailMap[id] = { link, title };
     }
   });
 
-  // 为每个详情弹窗追加按钮与二维码容器（若不存在）
+  // 为每个详情弹窗追加按钮
   document.querySelectorAll('.popup').forEach(popup => {
     if (!popup.id.endsWith('-detail')) return;
     const content = popup.querySelector('.popup-content');
@@ -78,52 +124,29 @@ function initDetailMobileView() {
     wrapper.className = 'mobile-view';
     wrapper.innerHTML = `
       <div class="mobile-actions">
-        <button class="mobile-view-btn" type="button"><i class="fas fa-qrcode"></i> 展开/收起二维码</button>
-        <a class="official-website-btn" href="#" target="_blank" rel="noopener">获取资源</a>
+        <button class="mobile-view-btn glass-ui" type="button"><i class="fas fa-qrcode"></i> 显示二维码</button>
+        <a class="official-website-btn glass-ui" href="#" target="_blank" rel="noopener">获取资源</a>
       </div>
-      <div class="qr-container"><img alt="二维码" /><p class="qr-hint">扫描二维码在手机上获取资源</p></div>
     `;
     content.appendChild(wrapper);
 
     const btn = wrapper.querySelector('.mobile-view-btn');
-    const qr = wrapper.querySelector('.qr-container');
-    const img = qr.querySelector('img');
     const siteBtn = wrapper.querySelector('.official-website-btn');
 
-    // 设置官网链接
-    const siteLink = detailMap[popup.id] || '';
-    if (siteLink) {
-      siteBtn.href = siteLink;
+    // 设置官网链接和标题
+    const data = detailMap[popup.id] || { link: '', title: '' };
+    if (data.link) {
+      siteBtn.href = data.link;
     } else {
-      siteBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-      });
+      siteBtn.style.display = 'none';
     }
 
-    // 无障碍属性初始化
-    btn.setAttribute('aria-expanded', 'false');
-    qr.setAttribute('aria-hidden', 'true');
-
+    // 点击按钮显示独立的二维码弹窗
     btn.addEventListener('click', () => {
-      // 切换二维码容器展开/收起
-      const willOpen = !qr.classList.contains('open');
-      if (willOpen) {
-        const url = detailMap[popup.id] || '';
-        if (url) {
-          // 使用在线二维码生成服务
-          const api = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=' + encodeURIComponent(url);
-          img.src = api;
-        } else {
-          img.removeAttribute('src');
-          qr.querySelector('.qr-hint').textContent = '未找到官网链接，请稍后重试';
-        }
-        qr.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-        qr.setAttribute('aria-hidden', 'false');
+      if (data.link) {
+        showQrPopup(data.link, data.title);
       } else {
-        qr.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        qr.setAttribute('aria-hidden', 'true');
+        alert('未找到该资源的有效链接。');
       }
     });
   });

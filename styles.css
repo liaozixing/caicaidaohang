@@ -762,7 +762,7 @@ footer {
 }
 
 .popup-content {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--card-bg);
     backdrop-filter: blur(15px) saturate(1.2);
     -webkit-backdrop-filter: blur(15px) saturate(1.2);
     padding: 30px;
@@ -836,7 +836,106 @@ footer {
 .mobile-view {
     margin-top: 20px;
     padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid transparent;
+}
+
+/* 全局二维码弹窗样式 */
+.qr-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 4000;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-popup-overlay.active {
+    display: flex;
+}
+
+.qr-popup-content {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    text-align: center;
+    animation: popup-fade-in 0.3s ease-out;
+}
+
+.qr-popup-content img {
+    display: block;
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#qr-popup-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+#qr-loader {
+    display: none; /* 默认隐藏 */
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 85px auto; /* 垂直和水平居中 */
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.qr-popup-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.qr-popup-close {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.qr-popup-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    background: rgba(0, 0, 0, 0.7);
+}
+
+@keyframes popup-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .mobile-actions {
